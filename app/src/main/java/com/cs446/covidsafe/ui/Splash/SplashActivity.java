@@ -28,7 +28,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Objects.requireNonNull(getSupportActionBar()).hide();
         ButterKnife.bind(this);
 
         Handler handler = new Handler(getMainLooper());
