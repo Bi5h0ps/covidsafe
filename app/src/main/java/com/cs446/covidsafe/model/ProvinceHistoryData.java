@@ -15,7 +15,7 @@ public class ProvinceHistoryData {
     private Long population;
 
     @SerializedName("sq_km_area")
-    @Expose
+    @Expose(deserialize = false)
     private Long area;
 
     @SerializedName("life_expectancy")
@@ -49,4 +49,48 @@ public class ProvinceHistoryData {
     @SerializedName("dates")
     @Expose
     private Map<String, Long> data;
+
+    public String getCountry() {
+        return country;
+    }
+
+    public Long getPopulation() {
+        return population;
+    }
+
+    public Long getArea() {
+        return area;
+    }
+
+    public String getLifeExpectancy() {
+        return lifeExpectancy;
+    }
+
+    public Long getElevation() {
+        return elevation;
+    }
+
+    public String getContinent() {
+        return continent;
+    }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public Long getIso() {
+        return iso;
+    }
+
+    public String getCapitalCity() {
+        return capitalCity;
+    }
+
+    public Map<String, Long> getData() {
+        return data;
+    }
 }
