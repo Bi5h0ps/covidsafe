@@ -5,4 +5,27 @@
     <string name="virus_information">Virus Information</string>
     <string name="vaccine_information">Vaccine Information</string>
     <string name="covidsafe">CovidSafe</string>
+    <string name="covid_information">
+        COVID-19 is the disease caused by a new coronavirus called SARS-CoV-2.
+        WHO first learned of this new virus on 31 December 2019, following a report of a cluster of cases of \'viral pneumonia\' in Wuhan, People\'s Republic of China.
+    </string>
+    <string name="covid_symptoms">
+        The most common symptoms of COVID-19 are:\n
+
+        Fever\n
+        Dry cough\n
+        Fatigue\n
+        Other symptoms that are less common and may affect some patients include:\n
+
+        Loss of taste or smell,\n
+        Nasal congestion,\n
+        Conjunctivitis (also known as red eyes)\n
+        Sore throat,\n
+        Headache,\n
+        Muscle or joint pain,\n
+        Different types of skin rash,\n
+        Nausea or vomiting,\n
+        Diarrhea,\n
+        Chills or dizziness.
+    </string>
 </resources>

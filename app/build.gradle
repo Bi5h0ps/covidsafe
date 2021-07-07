@@ -56,4 +56,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     //lottie animation
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    //card view
+    implementation("androidx.cardview:cardview:1.0.0")
 }
