@@ -5,4 +5,10 @@
     <string name="virus_information">Virus Information</string>
     <string name="vaccine_information">Vaccine Information</string>
     <string name="covidsafe">CovidSafe</string>
+
+    <string-array name="covid_data_type">
+        <item>Deaths</item>
+        <item>Confirmed</item>
+        <item>Recovered</item>
+    </string-array>
 </resources>

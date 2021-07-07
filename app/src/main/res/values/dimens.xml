@@ -3,4 +3,6 @@
     <dimen name="textSize13">13sp</dimen>
     <dimen name="textSize40">40sp</dimen>
     <dimen name="ten">10dp</dimen>
+    <dimen name="twenty">20dp</dimen>
+    <dimen name="textSize20">20sp</dimen>
 </resources>
