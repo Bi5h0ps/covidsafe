@@ -25,7 +25,7 @@ public class vaccine_info_adapter extends RecyclerView.Adapter<vaccine_info_adap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @org.jetbrains.annotations.NotNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.fragment_vaccine_info_row, parent, false);
+        View view = inflater.inflate(R.layout.vh_vaccine_info_row, parent, false);
         return new ViewHolder(view);
     }
 
