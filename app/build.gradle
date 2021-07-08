@@ -34,9 +34,11 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     def lifecycle_version = "1.1.1"
     def room_version = "2.3.0"
     def lottieVersion = "3.7.0"
+    def retrofitVersion = "2.9.0"
 
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.3.0'
@@ -56,4 +58,11 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     //lottie animation
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    //retrofit2
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation "com.squareup.okhttp3:logging-interceptor:3.4.1"
+    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
 }
