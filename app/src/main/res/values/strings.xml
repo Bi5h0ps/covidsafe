@@ -11,4 +11,19 @@
         <item>Confirmed</item>
         <item>Recovered</item>
     </string-array>
+
+    <string-array name="vaccine_types">
+        <item>Moderna</item>
+        <item>Pfizer</item>
+        <item>AstraZeneca</item>
+        <item>Janseen</item>
+    </string-array>
+
+    <string-array name="vaccine_desc">
+        <item>Moderna description</item>
+        <item>Pfizer description</item>
+        <item>AstraZeneca description</item>
+        <item>Janseen description</item>
+    </string-array>
+
 </resources>
