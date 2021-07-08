@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_covid_viewpager"
+    app:startDestination="@id/covidFragment">
+
+    <fragment
+        android:id="@+id/covidFragment"
+        android:name="com.cs446.covidsafe.ui.Covid.CovidFragment"
+        android:label="CovidFragment" >
+        <action
+            android:id="@+id/action_covidFragment_to_countryPickerFragment"
+            app:destination="@id/countryPickerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countryPickerFragment"
+        android:name="com.cs446.covidsafe.ui.Covid.CovidStats.CountryPicker.CountryPickerFragment"
+        android:label="country_picker_fragment"
+        tools:layout="@layout/country_picker_fragment" >
+        <argument
+            android:name="countries"
+            app:argType="string[]" />
+    </fragment>
+</navigation>
