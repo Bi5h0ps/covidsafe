@@ -36,11 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:gravity="center_horizontal"
-            android:drawablePadding="6dp"
-            android:text="@string/virus_information"
-            android:textColor="@drawable/textcolor_bottom_main"
-            android:textSize="@dimen/textSize13" />
+            android:drawableTop="@drawable/textcolor_bottom_main"
+            android:gravity="center_horizontal"/>
 
         <RadioButton
             android:id="@+id/rb_2"
@@ -48,11 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:drawableTop="@drawable/icon_bottom_main"
             android:gravity="center_horizontal"
-            android:drawablePadding="6dp"
-            android:text="@string/vaccine_information"
-            android:textColor="@drawable/textcolor_bottom_main"
-            android:textSize="@dimen/textSize13" />
+            android:drawablePadding="-3dp"/>
 
     </RadioGroup>
 
