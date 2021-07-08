@@ -30,4 +30,10 @@
         People who do not have symptoms but have had close contact with someone who is, or may be,
         infected may also consider testing – contact your local health guidelines and follow their guidance.
     </string>
+
+    <string-array name="covid_data_type">
+        <item>Deaths</item>
+        <item>Confirmed</item>
+        <item>Recovered</item>
+    </string-array>
 </resources>
