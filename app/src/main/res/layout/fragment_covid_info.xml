@@ -13,85 +13,262 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_height="300dp"
+                android:layout_margin="20dp"
                 app:cardBackgroundColor="#7fffd4"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="20dp">
+                app:cardElevation="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:text="What is COVID19?"
-                        android:textSize="30dp" />
+                        android:text="COVID-NEWS"
+                        android:textSize="@dimen/covid_info_title" />
 
-                    <TextView
-                        android:id="@+id/textView17"
+                    <ListView
+                        android:id="@+id/covid_news_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/covid_information"
-                        android:textSize="17dp" />
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp">
+
+                    </ListView>
+
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="#7ffff4"
-                app:cardCornerRadius="20dp">
+                android:layout_margin="20dp"
+                app:cardBackgroundColor="#7fffd4"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="20dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textView14"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="What are the symptoms of COVID-19?"
-                        android:textSize="30dp" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Travel Restriction"
+                            android:textSize="@dimen/covid_info_title" />
+
+                        <Spinner
+                            android:id="@+id/country_selection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="match_parent"
+                        android:id="@+id/travel_restriction"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/covid_symptoms" />
+                        android:layout_marginTop="10dp"
+                        android:textSize="@dimen/covid_info_text"
+                        android:text="Please choose a country to begin" />
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                app:cardBackgroundColor="#7fffff"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="20dp">
+                android:layout_height="match_parent"
+                android:id="@+id/FAQ">
 
-                <TextView
-                    android:id="@+id/textView15"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/covid_symptoms" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="What is COVID19?"
+                                android:textSize="@dimen/covid_info_title" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/covid_information"
+                                android:textSize="@dimen/covid_info_text" />
+
+                            <Button
+                                android:id="@+id/who_web_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Learn more from WHO"
+                                android:textSize="@dimen/covid_info_sub_title" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="How is COVID-19 transmitted?"
+                                android:textSize="@dimen/covid_info_title" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/covid_transmission_information"
+                                android:textSize="@dimen/covid_info_text" />
+
+                            <Button
+                                android:id="@+id/covid_stats"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:background="@android:color/white"
+                                android:text="COVID STATS"
+                                android:textSize="@dimen/covid_info_sub_title" />
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        app:cardBackgroundColor="#7ffff4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="What are the symptoms of COVID-19?"
+                                android:textSize="@dimen/covid_info_title" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="The most common symptoms of COVID-19 are:"
+                                android:textSize="@dimen/covid_info_sub_title" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/covid_common_symptoms"
+                                android:textSize="@dimen/covid_info_text" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:text="Symptoms of severe COVID‐19 disease include:"
+                                android:textSize="@dimen/covid_info_sub_title" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/covid_severe_symptoms"
+                                android:textSize="@dimen/covid_info_text" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="When should I get a test for COVID-19?"
+                                android:textSize="@dimen/covid_info_title" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/covid_test_information"
+                                android:textSize="@dimen/covid_info_text" />
+
+                            <Button
+                                android:id="@+id/covid_updates_button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="COVID UPDATES" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </ScrollView>
+
         </LinearLayout>
     </ScrollView>
 
