@@ -8,10 +8,11 @@ android {
 
     defaultConfig {
         applicationId "com.cs446.covidsafe"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,8 +60,6 @@ dependencies {
     //room
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-    //bubble navigation
-    implementation 'com.gauravk.bubblenavigation:bubblenavigation:1.0.7'
     //butter knife
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
@@ -75,6 +74,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
     //card view
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 apply plugin: "androidx.navigation.safeargs"
