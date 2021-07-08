@@ -1,66 +1,84 @@
 package com.cs446.covidsafe.ui.Covid.CovidUpdates;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cs446.covidsafe.R;
+import com.cs446.covidsafe.model.ProvinceData;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CovidUpdatesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CovidUpdatesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private CovidUpdatesViewModel viewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @BindView(R.id.DeathsCase)
+    TextView deathsCase;
+
+    @BindView(R.id.ConfirmedCase)
+    TextView confirmedCase;
+
+    @BindView(R.id.RecoveredCase)
+    TextView recoveredCase;
+
+    @BindView(R.id.chart)
+    PieChart chart;
 
     public CovidUpdatesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CovidUpdatesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CovidUpdatesFragment newInstance(String param1, String param2) {
-        CovidUpdatesFragment fragment = new CovidUpdatesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        viewModel = ViewModelProviders.of(this).get(CovidUpdatesViewModel.class);
+        viewModel.init();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_covid_updates, container, false);
+        View view = inflater.inflate(R.layout.fragment_covid_updates, container, false);
+        ButterKnife.bind(this, view);
+        viewModel.getResponseData().observe(getViewLifecycleOwner(), new Observer<Map<String, Map<String, ProvinceData>>>() {
+            @Override
+            public void onChanged(Map<String, Map<String, ProvinceData>> countries) {
+                if (countries != null) {
+                    deathsCase.setText(Long.toString(countries.get("Canada").get("All").getDeaths()));
+                    confirmedCase.setText(Long.toString(countries.get("Canada").get("All").getConfirmed()));
+                    recoveredCase.setText(Long.toString(countries.get("Canada").get("All").getRecovered()));
+
+                    List<PieEntry> entries = new ArrayList<>();
+                    entries.add(new PieEntry(countries.get("Canada").get("All").getDeaths(), "deaths"));
+                    entries.add(new PieEntry(countries.get("Canada").get("All").getConfirmed(), "confirmed"));
+                    entries.add(new PieEntry(countries.get("Canada").get("All").getRecovered(), "recovered"));
+                    PieDataSet set = new PieDataSet(entries, "");
+                    set.setColors(new int[] { getResources().getColor(R.color.red), getResources().getColor(R.color.blue), getResources().getColor(R.color.green)});
+                    PieData data = new PieData(set);
+                    chart.setData(data);
+                    chart.invalidate();
+                }
+            }
+        });
+        return view;
     }
 }
