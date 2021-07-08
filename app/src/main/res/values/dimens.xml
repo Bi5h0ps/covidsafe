@@ -9,4 +9,5 @@
     <dimen name="covid_info_text">15dp</dimen>
     <dimen name="twenty">20dp</dimen>
     <dimen name="textSize20">20sp</dimen>
+    <dimen name="fifty">50dp</dimen>
 </resources>

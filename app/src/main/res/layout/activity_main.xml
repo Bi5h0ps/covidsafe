@@ -7,7 +7,7 @@
     tools:context=".ui.Main.MainActivity"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/fl_content_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/rg">
-    </LinearLayout>
+    </FrameLayout>
 
     <RadioGroup
         android:id="@+id/rg"
