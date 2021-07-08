@@ -1,5 +1,7 @@
 package com.cs446.covidsafe.ui.Covid.CovidStats;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ import com.cs446.covidsafe.model.ProvinceData;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,27 +71,40 @@ public class CovidStatsFragment extends Fragment implements AdapterView.OnItemSe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_covid_stats, container, false);
-        getChildFragmentManager().setFragmentResultListener("country_selected",
-                getViewLifecycleOwner(),
-                (requestKey, result) -> {
-                    String countryName = result.getString("country_name");
-                    Toast.makeText(getContext(), countryName, Toast.LENGTH_SHORT).show();
-                }) ;
         ButterKnife.bind(this, view);
-/*
-        NavHostFragment fragment =
-                (NavHostFragment) getChildFragmentManager().findFragmentById(R.id.covidStatsFragment);
-        assert fragment != null;
-        mNavController = fragment.getNavController();*/
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.covid_data_type, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mEditTextCountryPicker.
-                setOnClickListener(v ->
-                        mNavController.navigate(R.id.action_covidStatsFragment_to_countryPickerFragment));
         mSpinner.setAdapter(adapter);
         mSpinner.setSelection(0);
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getContext());
+        mEditTextCountryPicker.setOnClickListener(v -> {
+            builderSingle.setTitle("Select a Country");
+            builderSingle.setItems(
+                    viewModel.getCountryList().keySet().toArray(new String[0]),
+                    (dialog, which) -> {
+                viewModel.onCountrySelected(which);
+                mEditTextCountryPicker.setText(viewModel.getCountry());
+                mEditTextProvincePicker.setText(viewModel.getProvince());
+            });
+            AlertDialog dialog = builderSingle.create();
+            dialog.show();
+        });
+
+        mEditTextProvincePicker.setOnClickListener(v -> {
+            builderSingle.setTitle("Select a Province");
+            builderSingle.setItems(
+                    viewModel.getProvinceList().toArray(new String[0]),
+                    (dialog, which) -> {
+                        viewModel.onProvinceSelected(which);
+                        mEditTextProvincePicker.setText(viewModel.getProvince());
+                    });
+            AlertDialog dialog = builderSingle.create();
+            dialog.show();
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
