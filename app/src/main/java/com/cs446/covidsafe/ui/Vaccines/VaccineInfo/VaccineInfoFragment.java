@@ -12,6 +12,11 @@ import android.view.ViewGroup;
 
 import com.cs446.covidsafe.R;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link VaccineInfoFragment#newInstance} factory method to
@@ -24,6 +29,7 @@ public class VaccineInfoFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String types[], desc[];
+    private List <vaccine_desc> data;
     RecyclerView info_recyclerView;
 
     // TODO: Rename and change types of parameters
@@ -68,8 +74,14 @@ public class VaccineInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         types = getResources().getStringArray(R.array.vaccine_types);
         desc = getResources().getStringArray(R.array.vaccine_desc);
+        int size = types.length;
+        data = new ArrayList<vaccine_desc>();
+        for (int i = 0; i < size; i++) {
+            data.add(new vaccine_desc(types[i], desc[i]));
+        }
+
         info_recyclerView = view.findViewById(R.id.vaccine_info_recyclerView);
-        vaccine_info_adapter adaptor = new vaccine_info_adapter(getContext(), types, desc);
+        vaccine_info_adapter adaptor = new vaccine_info_adapter(data);
         info_recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         info_recyclerView.setAdapter(adaptor);
         return view;
