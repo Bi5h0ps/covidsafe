@@ -56,4 +56,10 @@
             Viral vector-based vaccines use a harmless virus, such as an adenovirus, as a delivery system. This “vector” virus is not the virus that causes COVID-19. Adenoviruses are among the viruses that can cause the common cold. There are many different types of adenoviruses, and many have been used as delivery systems for other vector-based vaccines for decades.\nWhen a person is given the vaccine, the vector virus contained within the vaccine produces the SARS-CoV-2 spike protein, which is found on the surface of the virus that causes COVID-19. This protein will not make you sick. It does its job and goes away.\nThrough this process, the body is able to build a strong immune response against the spike protein without exposing you to the virus that causes COVID-19.
         </item>
     </string-array>
+
+    <string-array name="reminder_settings">
+        <item>1 week, 3 days, and 1 day prior</item>
+        <item>3 days and 1 day prior</item>
+        <item>1 day prior</item>
+    </string-array>
 </resources>
