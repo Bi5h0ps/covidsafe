@@ -3,12 +3,15 @@ package com.cs446.covidsafe.ui.Vaccines.VaccineAlert;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cs446.covidsafe.R;
+import com.cs446.covidsafe.ui.Vaccines.VaccineInfo.vaccine_info_adapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +28,15 @@ public class VaccineAlertFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private String location;
+    private String time; // this should probably be converted to something using the proper time class afterwards
+
+    private String[] reminderSettings = {
+            "Notification 1 week, 3 days, and 1 day prior",
+            "Notification 3 days and 1 day prior",
+            "Notification 1 day prior"
+    };
 
     public VaccineAlertFragment() {
         // Required empty public constructor
@@ -60,7 +72,8 @@ public class VaccineAlertFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_vaccine_alert, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_vaccine_alert, container, false);
+        return view;
     }
 }
