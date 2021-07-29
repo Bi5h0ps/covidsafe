@@ -1,9 +1,13 @@
 package com.cs446.covidsafe.ui.Covid.CovidInfo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,15 +16,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cs446.covidsafe.R;
+import com.cs446.covidsafe.model.CovidNews;
+import com.kwabenaberko.newsapilib.NewsApiClient;
+import com.kwabenaberko.newsapilib.models.Article;
+import com.kwabenaberko.newsapilib.models.request.EverythingRequest;
+import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
+import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,30 +88,30 @@ public class CovidInfoFragment extends Fragment {
 
 
     public void fillCovidNews(){
-        //Todo: Find an API to generate covid news
-        List<News> news_data = new ArrayList<News>();
-        // add some data
-        news_data.add(new News("NSW COVID-19 cases set to surge today as infections grow in south-west Sydney",
-                                "https://www.abc.net.au/news/2021-07-08/nsw-braces-for-rise-in-covid19-cases-in-south-west-sydney/100275184"));
-        news_data.add(new News("Global Covid-19 death toll surpasses 4 million",
-                                "https://www.reuters.com/world/asia-pacific/japan-set-declare-state-emergency-tokyo-area-through-aug-22-minister-2021-07-08/"));
-        news_data.add(new News("COVID-19: Double-jabbed Britons will be allowed to travel to 140 amber list countries with no quarantine on return",
-                                "https://news.sky.com/story/covid-19-summer-holidays-set-for-take-off-govt-to-allow-fully-vaccinated-travellers-to-avoid-quarantine-rules-12351279"));
-        //news_data.add(new News("Spectators to face Olympic ban as Tokyo declares coronavirus emergency-report",
-        //                           "https://www.reuters.com/world/asia-pacific/japan-set-declare-state-emergency-tokyo-area-through-aug-22-minister-2021-07-08/"));
-        ArrayAdapter adapter = new ArrayAdapter<News>(getActivity(), android.R.layout.simple_selectable_list_item, news_data);
+        CovidNews covid_news = new CovidNews();
+        String[] from = {"news_image", "news_title", "weblink"};
+        int[] to = {R.id.news_image, R.id.news_title, R.id.weblink};
+        SimpleAdapter adapter = new SimpleAdapter(getActivity(), covid_news.getCovidNewsList(),
+                R.layout.covid_news_listview_item, from, to) {
+            @Override
+            public void setViewImage(final ImageView v, final String value) {
+                Picasso.get().load(value).into(v);
+            }
+        };
+        covid_news.pullNews(adapter);
         ListView covid_news_list = rootView.findViewById(R.id.covid_news_list);
         covid_news_list.setAdapter(adapter);
         covid_news_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String url = ((News) adapter.getItem(position)).getLink();
+                String url = ((TextView) view.findViewById(R.id.weblink)).getText().toString();
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
             }
         });
     }
+
     private void setCovidStatsLink(){
         Button who_web_button = (Button) rootView.findViewById(R.id.who_web_button);
         who_web_button.setOnClickListener(new View.OnClickListener() {
