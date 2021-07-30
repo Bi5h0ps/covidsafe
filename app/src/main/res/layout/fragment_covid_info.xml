@@ -154,16 +154,16 @@
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="What is COVID19?"
                                         android:layout_weight="1"
+                                        android:text="What is COVID19?"
                                         android:textSize="@dimen/covid_info_title" />
+
                                     <ImageButton
                                         android:id="@+id/expandCovidInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
-                                        android:layout_weight="8"
                                         android:layout_gravity="center"
+                                        android:layout_weight="8"
                                         android:background="@null"
 
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
@@ -171,13 +171,13 @@
                                 </LinearLayout>
 
                                 <TextView
+                                    android:id="@+id/covid_facts"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:id="@+id/covid_facts"
                                     android:text="@string/covid_information"
                                     android:textSize="@dimen/covid_info_text"
-                                    android:visibility="gone"/>
+                                    android:visibility="gone" />
 
                                 <Button
                                     android:id="@+id/who_web_button"
@@ -217,19 +217,20 @@
                                         android:id="@+id/expandTransmissionInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
                                         android:background="@null"
                                         android:layout_weight="8"
                                         android:layout_gravity="center"
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
                                 </LinearLayout>
+
                                 <TextView
+                                    android:id="@+id/transmission"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:visibility="gone"
                                     android:text="@string/covid_transmission_information"
-                                    android:textSize="@dimen/covid_info_text" />
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
 
                                 <Button
                                     android:id="@+id/covid_stats"
@@ -275,7 +276,6 @@
                                         android:id="@+id/expandSymptomsInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
                                         android:background="@null"
                                         android:layout_weight="8"
                                         android:layout_gravity="center"
@@ -284,36 +284,41 @@
                                 </LinearLayout>
 
                                 <TextView
+
+                                    android:id="@+id/symptom1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="15dp"
-                                    android:visibility="gone"
                                     android:text="The most common symptoms of COVID-19 are:"
-                                    android:textSize="@dimen/covid_info_sub_title" />
+                                    android:textSize="@dimen/covid_info_sub_title"
+                                    android:visibility="gone" />
 
                                 <TextView
+                                    android:id="@+id/symptom2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:visibility="gone"
                                     android:text="@string/covid_common_symptoms"
-                                    android:textSize="@dimen/covid_info_text" />
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
 
                                 <TextView
+                                    android:id="@+id/symptom3"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="15dp"
-                                    android:visibility="gone"
                                     android:text="Symptoms of severe COVID‐19 disease include:"
-                                    android:textSize="@dimen/covid_info_sub_title" />
+                                    android:textSize="@dimen/covid_info_sub_title"
+                                    android:visibility="gone" />
 
                                 <TextView
+                                    android:id="@+id/symptom4"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:visibility="gone"
                                     android:text="@string/covid_severe_symptoms"
-                                    android:textSize="@dimen/covid_info_text" />
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 
@@ -348,7 +353,6 @@
                                         android:id="@+id/expandTestInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="7dp"
                                         android:background="@null"
                                         android:layout_weight="8"
                                         android:layout_gravity="center"
@@ -357,14 +361,14 @@
                                 </LinearLayout>
 
 
-
                                 <TextView
+                                    android:id="@+id/testinfo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:visibility="gone"
                                     android:text="@string/covid_test_information"
-                                    android:textSize="@dimen/covid_info_text" />
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
 
                                 <Button
                                     android:id="@+id/covid_updates_button"

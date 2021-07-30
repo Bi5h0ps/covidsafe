@@ -181,6 +181,65 @@ public class CovidInfoFragment extends Fragment {
                 }
             }
         });
+
+
+        ImageButton button2 = (ImageButton) rootView.findViewById(R.id.expandTransmissionInfoButton);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.transmission);
+                Button bv = (Button) rootView.findViewById(R.id.covid_stats);
+                if(tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    bv.setVisibility(View.VISIBLE);
+                    button2.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                }else {
+                    tv.setVisibility(View.GONE);
+                    bv.setVisibility(View.GONE);
+                    button2.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        ImageButton button3 = (ImageButton) rootView.findViewById(R.id.expandSymptomsInfoButton);
+        button3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv1 = (TextView) rootView.findViewById(R.id.symptom1);
+                TextView tv2 = (TextView) rootView.findViewById(R.id.symptom2);
+                TextView tv3 = (TextView) rootView.findViewById(R.id.symptom3);
+                TextView tv4 = (TextView) rootView.findViewById(R.id.symptom4);
+                if (tv1.getVisibility() == View.GONE) {
+                    tv1.setVisibility(View.VISIBLE);
+                    tv2.setVisibility(View.VISIBLE);
+                    tv3.setVisibility(View.VISIBLE);
+                    tv4.setVisibility(View.VISIBLE);
+                    button3.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv1.setVisibility(View.GONE);
+                    tv2.setVisibility(View.GONE);
+                    tv3.setVisibility(View.GONE);
+                    tv4.setVisibility(View.GONE);
+                    button3.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+
+            }
+        });
+
+        ImageButton button4 = (ImageButton) rootView.findViewById(R.id.expandTestInfoButton);
+        button4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.testinfo);
+                Button bv = (Button) rootView.findViewById(R.id.covid_updates_button);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    bv.setVisibility(View.VISIBLE);
+                    button4.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    bv.setVisibility(View.GONE);
+                    button4.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
     }
 
     private void setWhoWebLink(){
