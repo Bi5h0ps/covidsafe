@@ -122,12 +122,12 @@
                 app:cardElevation="10dp">
 
                 <androidx.core.widget.NestedScrollView
+                    android:id="@+id/FAQ"
                     android:layout_width="match_parent"
-                    android:scrollbars="vertical"
+                    android:layout_height="500dp"
                     android:fadeScrollbars="false"
-                    android:layout_height="400dp"
                     android:scrollbarFadeDuration="0"
-                    android:id="@+id/FAQ">
+                    android:scrollbars="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -137,9 +137,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Facts about COVID-19"
                             android:layout_margin="20dp"
                             android:layout_weight="1"
+                            android:text="Facts about COVID-19"
                             android:textSize="@dimen/covid_info_title" />
 
                         <androidx.cardview.widget.CardView
@@ -197,7 +197,7 @@
                                     android:layout_marginTop="15dp"
                                     android:text="Learn more from WHO"
                                     android:textSize="@dimen/covid_info_sub_title"
-                                    android:visibility="gone"/>
+                                    android:visibility="gone" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -214,23 +214,26 @@
                                 android:layout_height="match_parent"
                                 android:layout_margin="20dp"
                                 android:orientation="vertical">
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="How is COVID-19 transmitted?"
                                         android:layout_weight="1"
+                                        android:text="How is COVID-19 transmitted?"
                                         android:textSize="@dimen/covid_info_title" />
+
                                     <ImageButton
                                         android:id="@+id/expandTransmissionInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@null"
-                                        android:layout_weight="8"
                                         android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
                                 </LinearLayout>
 
@@ -244,14 +247,14 @@
                                     android:visibility="gone" />
 
                                 <Button
-                                    android:id="@+id/covid_stats"
-                                    android:visibility="gone"
+                                    android:id="@+id/jumpCovidStatsButton"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="15dp"
                                     android:background="@android:color/white"
                                     android:text="COVID STATS"
-                                    android:textSize="@dimen/covid_info_sub_title" />
+                                    android:textSize="@dimen/covid_info_sub_title"
+                                    android:visibility="gone" />
 
 
                             </LinearLayout>
@@ -276,20 +279,21 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="What are the symptoms of COVID-19?"
                                         android:layout_weight="1"
+                                        android:text="What are the symptoms of COVID-19?"
                                         android:textSize="@dimen/covid_info_title" />
 
                                     <ImageButton
                                         android:id="@+id/expandSymptomsInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@null"
-                                        android:layout_weight="8"
                                         android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
                                 </LinearLayout>
@@ -353,6 +357,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -364,9 +369,9 @@
                                         android:id="@+id/expandTestInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@null"
-                                        android:layout_weight="8"
                                         android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
                                 </LinearLayout>
@@ -382,11 +387,11 @@
                                     android:visibility="gone" />
 
                                 <Button
-                                    android:id="@+id/covid_updates_button"
+                                    android:id="@+id/jumpCovidUpdatesButton"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:visibility="gone"
-                                    android:text="COVID UPDATES" />
+                                    android:text="COVID UPDATES"
+                                    android:visibility="gone" />
                             </LinearLayout>
 
                         </androidx.cardview.widget.CardView>
@@ -409,6 +414,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -420,9 +426,9 @@
                                         android:id="@+id/expandKeepSafeButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@null"
-                                        android:layout_weight="8"
                                         android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
                                 </LinearLayout>
@@ -458,6 +464,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
+
                                     <TextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -469,9 +476,9 @@
                                         android:id="@+id/expandMaskInfoButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:background="@null"
-                                        android:layout_weight="8"
                                         android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
                                 </LinearLayout>
@@ -483,6 +490,106 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="@string/mask_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="What is the difference between isolation and quarantine?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandIsolationInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/isolationInfoText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/isolation_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Are there treatments for COVID-19?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandTreatmentsInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/treatmentsInfoText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/treatments_information"
                                     android:textSize="@dimen/covid_info_text"
                                     android:visibility="gone" />
                             </LinearLayout>

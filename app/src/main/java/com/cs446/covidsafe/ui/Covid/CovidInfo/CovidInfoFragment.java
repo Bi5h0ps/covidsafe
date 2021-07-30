@@ -1,14 +1,9 @@
 package com.cs446.covidsafe.ui.Covid.CovidInfo;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.opengl.Visibility;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -27,26 +22,10 @@ import android.widget.TextView;
 import com.cs446.covidsafe.R;
 import com.cs446.covidsafe.model.CovidNews;
 import com.cs446.covidsafe.model.TravelRestrictions;
-import com.google.gson.Gson;
-import com.kwabenaberko.newsapilib.NewsApiClient;
-import com.kwabenaberko.newsapilib.models.Article;
-import com.kwabenaberko.newsapilib.models.request.EverythingRequest;
-import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 import com.squareup.picasso.Picasso;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,17 +103,26 @@ public class CovidInfoFragment extends Fragment {
     }
 
     private void setCovidStatsLink(){
-        Button who_web_button = (Button) rootView.findViewById(R.id.who_web_button);
-        who_web_button.setOnClickListener(new View.OnClickListener() {
+        // TODO: add logic here:
+        // When the user clicks the button, it should jump to the covid stats page
+        Button jumpCovidStatsButton = (Button) rootView.findViewById(R.id.jumpCovidStatsButton);
+        jumpCovidStatsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String url = "https://www.who.int/";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+
             }
         });
     }
 
+    private void setCovidUpdatesLink(){
+        // TODO: add logic here:
+        // When the user clicks the button, it should jump to the covid updates page
+        Button jumpCovidUpdatesButton = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
+        jumpCovidUpdatesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+    }
     private void fillSpinnerSource(){
 
         TravelRestrictions tr = new TravelRestrictions();
@@ -187,7 +175,7 @@ public class CovidInfoFragment extends Fragment {
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TextView tv = (TextView) rootView.findViewById(R.id.transmission);
-                Button bv = (Button) rootView.findViewById(R.id.covid_stats);
+                Button bv = (Button) rootView.findViewById(R.id.jumpCovidStatsButton);
                 if(tv.getVisibility() == View.GONE) {
                     tv.setVisibility(View.VISIBLE);
                     bv.setVisibility(View.VISIBLE);
@@ -228,7 +216,7 @@ public class CovidInfoFragment extends Fragment {
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TextView tv = (TextView) rootView.findViewById(R.id.testinfo);
-                Button bv = (Button) rootView.findViewById(R.id.covid_updates_button);
+                Button bv = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
                 if (tv.getVisibility() == View.GONE) {
                     tv.setVisibility(View.VISIBLE);
                     bv.setVisibility(View.VISIBLE);
@@ -268,6 +256,34 @@ public class CovidInfoFragment extends Fragment {
                 }
             }
         });
+
+        ImageButton button7 = (ImageButton) rootView.findViewById(R.id.expandIsolationInfoButton);
+        button7.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.isolationInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button7.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button7.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        ImageButton button8 = (ImageButton) rootView.findViewById(R.id.expandTreatmentsInfoButton);
+        button8.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.treatmentsInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button8.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button8.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
     }
 
     private void setWhoWebLink(){
@@ -285,6 +301,7 @@ public class CovidInfoFragment extends Fragment {
     private void setButtonLinks(){
         setWhoWebLink();
         setCovidStatsLink();
+        setCovidUpdatesLink();
         registerExpandEvent();
     }
 
