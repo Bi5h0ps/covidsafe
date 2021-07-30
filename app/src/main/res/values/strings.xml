@@ -30,6 +30,16 @@
         People who do not have symptoms but have had close contact with someone who is, or may be,
         infected may also consider testing – contact your local health guidelines and follow their guidance.
     </string>
+    <string name="stay_safe_information">
+        1. Maintain at least a 1-metre distance between yourself and others to reduce your risk of infection when they cough, sneeze or speak. Maintain an even greater distance between yourself and others when indoors. The further away, the better.
+        \n\n2. Make wearing a mask a normal part of being around other people. The appropriate use, storage and cleaning or disposal are essential to make masks as effective as possible.
+    </string>
+    <string name="mask_information">
+        1. Clean your hands before you put your mask on, as well as before and after you take it off, and after you touch it at any time.\n\n
+        2. Make sure it covers both your nose, mouth and chin.\n\n
+        3. When you take off a mask, store it in a clean plastic bag, and every day either wash it if it’s a fabric mask, or dispose of a medical mask in a trash bin.\n\n
+        4. Don’t use masks with valves.
+    </string>
 
     <string-array name="covid_data_type">
         <item>Deaths</item>

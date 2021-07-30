@@ -240,6 +240,34 @@ public class CovidInfoFragment extends Fragment {
                 }
             }
         });
+
+        ImageButton button5 = (ImageButton) rootView.findViewById(R.id.expandKeepSafeButton);
+        button5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.keepSafeInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button5.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button5.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        ImageButton button6 = (ImageButton) rootView.findViewById(R.id.expandMaskInfoButton);
+        button6.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.maskInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button6.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button6.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
     }
 
     private void setWhoWebLink(){

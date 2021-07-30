@@ -8,6 +8,7 @@
     <dimen name="covid_info_sub_title">20sp</dimen>
     <dimen name="covid_info_text">15sp</dimen>
     <dimen name="twenty">20dp</dimen>
+    <dimen name="facts_item_margin">15dp</dimen>
     <dimen name="textSize20">20sp</dimen>
     <dimen name="fifty">50dp</dimen>
 </resources>
