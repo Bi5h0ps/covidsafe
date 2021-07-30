@@ -4,7 +4,7 @@
     <dimen name="textSize40">40sp</dimen>
     <dimen name="ten">10dp</dimen>
 
-    <dimen name="covid_info_title">25dp</dimen>
+    <dimen name="covid_info_title">23dp</dimen>
     <dimen name="covid_info_sub_title">20dp</dimen>
     <dimen name="covid_info_text">15dp</dimen>
     <dimen name="twenty">20dp</dimen>

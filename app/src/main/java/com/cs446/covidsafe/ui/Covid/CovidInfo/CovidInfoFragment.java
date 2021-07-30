@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 
 import com.cs446.covidsafe.R;
 import com.cs446.covidsafe.model.CovidNews;
+import com.cs446.covidsafe.model.TravelRestrictions;
+import com.google.gson.Gson;
 import com.kwabenaberko.newsapilib.NewsApiClient;
 import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.request.EverythingRequest;
@@ -32,10 +36,17 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,26 +136,10 @@ public class CovidInfoFragment extends Fragment {
     }
 
     private void fillSpinnerSource(){
-        //Todo: Find an API to fill the countries
-        List<String> country_data = new ArrayList<String>();
-        List<String> restriction = new ArrayList<String>();
 
-        //Need to use an API here
-        country_data.add("Canada");
-        country_data.add("US");
-
-        restriction.add("To protect Canadians from the outbreak of COVID-19, the Prime Minister " +
-                "announced travel restrictions that limit travel to Canada. Until further notice, most foreign " +
-                "nationals cannot travel to Canada, even if they have a valid visitor visa or electronic travel " +
-                "authorization (eTA).\n" +
-                "\n" +
-                "These restrictions stop most non-essential (discretionary) travel to Canada.");
-        restriction.add("Effective January 26, 2021, all airline passengers to the United States " +
-                "ages two years and older must provide a negative COVID-19 viral test taken within three calendar days of travel.  " +
-                "Alternatively, travelers to the U.S. may provide documentation from a licensed health care provider of having " +
-                "recovered from COVID-19 in the 90 days preceding travel.");
-
-        //Need to use an API here
+        TravelRestrictions tr = new TravelRestrictions();
+        HashMap<String, String> restriction_data = tr.getRestrictionData();
+        List<String> country_data = tr.getCountryData();
 
         Spinner country_selection = (Spinner) rootView.findViewById(R.id.country_selection);
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, country_data);
@@ -153,10 +148,12 @@ public class CovidInfoFragment extends Fragment {
 
         country_selection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView travel_restriction = (TextView) rootView.findViewById(R.id.travel_restriction);
-                travel_restriction.setText(restriction.get(country_selection.getSelectedItemPosition()));
+
+                String restrictionContent = restriction_data.get(country_selection.getSelectedItem().toString());
+                System.out.println(restriction_data.size());
+                travel_restriction.setText(restrictionContent);
             }
 
             @Override
@@ -164,7 +161,26 @@ public class CovidInfoFragment extends Fragment {
                 // TODO Auto-generated method stub
             }
         });
-        country_selection.setSelection(0);
+        country_selection.setSelection(2);
+    }
+
+    public void registerExpandEvent() {
+        ImageButton button1 = (ImageButton) rootView.findViewById(R.id.expandCovidInfoButton);
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.covid_facts);
+                Button bv = (Button) rootView.findViewById(R.id.who_web_button);
+                if(tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    bv.setVisibility(View.VISIBLE);
+                    button1.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                }else {
+                    tv.setVisibility(View.GONE);
+                    bv.setVisibility(View.GONE);
+                    button1.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
     }
 
     private void setWhoWebLink(){
@@ -182,7 +198,9 @@ public class CovidInfoFragment extends Fragment {
     private void setButtonLinks(){
         setWhoWebLink();
         setCovidStatsLink();
+        registerExpandEvent();
     }
+
     private void fillDataSource(){
         fillCovidNews();
         fillSpinnerSource();
