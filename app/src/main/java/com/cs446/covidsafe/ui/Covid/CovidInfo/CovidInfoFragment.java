@@ -113,7 +113,7 @@ public class CovidInfoFragment extends Fragment {
         });
     }
 
-    private void setCovidUpdatesLink(){
+    private void setCovidUpdatesLink() {
         // TODO: add logic here:
         // When the user clicks the button, it should jump to the covid updates page
         Button jumpCovidUpdatesButton = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
@@ -123,8 +123,9 @@ public class CovidInfoFragment extends Fragment {
             }
         });
     }
-    private void fillSpinnerSource(){
 
+
+    private void fillSpinnerSource(){
         TravelRestrictions tr = new TravelRestrictions();
         HashMap<String, String> restriction_data = tr.getRestrictionData();
         List<String> country_data = tr.getCountryData();
@@ -294,7 +295,7 @@ public class CovidInfoFragment extends Fragment {
         });
     }
 
-    private void setWhoWebLink(){
+    private void setWhoWebLink() {
         //When the user clicks the button, it should jump to who website
        Button who_web_button = (Button) rootView.findViewById(R.id.who_web_button);
        who_web_button.setOnClickListener(new View.OnClickListener() {
