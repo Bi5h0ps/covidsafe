@@ -146,13 +146,15 @@ public class CovidInfoFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+
             }
         });
         country_selection.setSelection(2);
     }
 
     public void registerExpandEvent() {
+        //Implement the expandable item list function
+        //For covid info section
         ImageButton button1 = (ImageButton) rootView.findViewById(R.id.expandCovidInfoButton);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -170,7 +172,7 @@ public class CovidInfoFragment extends Fragment {
             }
         });
 
-
+        //For COVID transmission info section
         ImageButton button2 = (ImageButton) rootView.findViewById(R.id.expandTransmissionInfoButton);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -188,6 +190,7 @@ public class CovidInfoFragment extends Fragment {
             }
         });
 
+        //For COVID symptoms info section
         ImageButton button3 = (ImageButton) rootView.findViewById(R.id.expandSymptomsInfoButton);
         button3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -212,6 +215,7 @@ public class CovidInfoFragment extends Fragment {
             }
         });
 
+        //For COVID test info section
         ImageButton button4 = (ImageButton) rootView.findViewById(R.id.expandTestInfoButton);
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -229,6 +233,7 @@ public class CovidInfoFragment extends Fragment {
             }
         });
 
+        //For keep safe info section
         ImageButton button5 = (ImageButton) rootView.findViewById(R.id.expandKeepSafeButton);
         button5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -243,6 +248,7 @@ public class CovidInfoFragment extends Fragment {
             }
         });
 
+        //For mask info section
         ImageButton button6 = (ImageButton) rootView.findViewById(R.id.expandMaskInfoButton);
         button6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -257,6 +263,7 @@ public class CovidInfoFragment extends Fragment {
             }
         });
 
+        //For isolation info section
         ImageButton button7 = (ImageButton) rootView.findViewById(R.id.expandIsolationInfoButton);
         button7.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -271,6 +278,7 @@ public class CovidInfoFragment extends Fragment {
             }
         });
 
+        //For treatments info section
         ImageButton button8 = (ImageButton) rootView.findViewById(R.id.expandTreatmentsInfoButton);
         button8.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -287,6 +295,7 @@ public class CovidInfoFragment extends Fragment {
     }
 
     private void setWhoWebLink(){
+        //When the user clicks the button, it should jump to who website
        Button who_web_button = (Button) rootView.findViewById(R.id.who_web_button);
        who_web_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -299,6 +308,7 @@ public class CovidInfoFragment extends Fragment {
     }
 
     private void setButtonLinks(){
+        //Register events for buttons
         setWhoWebLink();
         setCovidStatsLink();
         setCovidUpdatesLink();
@@ -306,6 +316,7 @@ public class CovidInfoFragment extends Fragment {
     }
 
     private void fillDataSource(){
+        //Fill data sources
         fillCovidNews();
         fillSpinnerSource();
     }
