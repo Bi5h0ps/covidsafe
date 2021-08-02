@@ -21,9 +21,12 @@ import android.widget.TextView;
 
 import com.cs446.covidsafe.R;
 import com.cs446.covidsafe.model.CovidNews;
+import com.cs446.covidsafe.model.Question;
+import com.cs446.covidsafe.model.QuestionFactory;
 import com.cs446.covidsafe.model.TravelRestrictions;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -322,6 +325,19 @@ public class CovidInfoFragment extends Fragment {
         fillSpinnerSource();
     }
 
+    private void fillQuestions(){
+        List<Question> questionList = new ArrayList<Question>();
+        QuestionFactory qf = new QuestionFactory();
+        for(int i = 0; i < 6; i++){
+            Question q = qf.getQuestion(i + 1);
+            q.updateQuestion(rootView, this.getContext());
+            questionList.add(q);
+        }
+    }
+
+    private void calculateMarks() {
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -329,6 +345,7 @@ public class CovidInfoFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_covid_info, container, false);
         fillDataSource();
         setButtonLinks();
+        fillQuestions();
         return rootView;
     }
 }

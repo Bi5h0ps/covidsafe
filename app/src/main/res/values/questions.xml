@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="q1">What does COVID-19 stand for?</string>
+    <string name="q2">What other viruses belong to the coronavirus family?</string>
+    <string name="q3">There are currently vaccines for the following coronaviruses:</string>
+    <string name="q4">How many vaccine candidates for COVID-19 have been proposed?</string>
+    <string name="q5">True or False: The virus is mutating rapidly.</string>
+    <string name="q6">True or False: A vaccine stimulates your immune system to produce antibodies, like it would if you were exposed to the virus.</string>
+</resources>

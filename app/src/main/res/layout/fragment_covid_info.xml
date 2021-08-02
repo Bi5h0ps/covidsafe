@@ -430,7 +430,6 @@
                                         android:layout_weight="8"
                                         android:background="@null"
                                         android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
-
                                 </LinearLayout>
 
 
@@ -607,6 +606,405 @@
                 android:gravity="center"
                 android:layout_marginBottom="20dp"
                 android:textSize="@dimen/covid_info_sub_title"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_margin="5dp"
+                app:cardBackgroundColor="@color/card_bg1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/quiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fadeScrollbars="false"
+                    android:scrollbarFadeDuration="0"
+                    android:scrollbars="vertical">
+
+                    <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/q1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/facts_item_margin"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/q1_question"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="q1"
+                                android:layout_margin="10dp"
+                                android:textSize="@dimen/covid_info_sub_title"/>
+
+                            <CheckBox
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:id="@+id/q1_c1"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:id="@+id/q1_c2"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:id="@+id/q1_c3"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:id="@+id/q1_c4"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/q2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/facts_item_margin"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/q2_question"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="q2"
+                                    android:layout_margin="10dp"
+                                    android:textSize="@dimen/covid_info_sub_title"/>
+
+                                <CheckBox
+                                    android:id="@+id/q2_c1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/an_color"
+                                    android:fontFamily="Arial"
+                                    android:layout_margin="5dp"
+                                    android:text="CheckBox" />
+
+                                <CheckBox
+                                    android:id="@+id/q2_c2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/an_color"
+                                    android:fontFamily="Arial"
+                                    android:layout_margin="5dp"
+                                    android:text="CheckBox" />
+
+                                <CheckBox
+                                    android:id="@+id/q2_c3"
+                                    android:layout_width="match_parent"
+                                    android:fontFamily="Arial"
+                                    android:textColor="@color/an_color"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:text="CheckBox" />
+
+                                <CheckBox
+                                    android:id="@+id/q2_c4"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/an_color"
+                                    android:fontFamily="Arial"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:text="CheckBox" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/q3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/facts_item_margin"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/q3_question"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="q2"
+                                android:layout_margin="10dp"
+                                android:textSize="@dimen/covid_info_sub_title"/>
+
+                            <CheckBox
+                                android:id="@+id/q3_c1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q3_c2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q3_c3"
+                                android:layout_width="match_parent"
+                                android:fontFamily="Arial"
+                                android:textColor="@color/an_color"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q3_c4"
+                                android:layout_width="match_parent"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/q4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/facts_item_margin"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/q4_question"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="q4"
+                                android:layout_margin="10dp"
+                                android:textSize="@dimen/covid_info_sub_title"/>
+
+                            <CheckBox
+                                android:id="@+id/q4_c1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q4_c2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q4_c3"
+                                android:layout_width="match_parent"
+                                android:fontFamily="Arial"
+                                android:textColor="@color/an_color"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q4_c4"
+                                android:layout_width="match_parent"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/q5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/facts_item_margin"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/q5_question"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="q5"
+                                android:layout_margin="10dp"
+                                android:textSize="@dimen/covid_info_sub_title"/>
+
+                            <CheckBox
+                                android:id="@+id/q5_c1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q5_c2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q5_c3"
+                                android:layout_width="match_parent"
+                                android:fontFamily="Arial"
+                                android:textColor="@color/an_color"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q5_c4"
+                                android:layout_width="match_parent"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/q6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/facts_item_margin"
+                        app:cardBackgroundColor="#7fffd4"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="10dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/q6_question"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="q6"
+                                android:layout_margin="10dp"
+                                android:textSize="@dimen/covid_info_sub_title"/>
+
+                            <CheckBox
+                                android:id="@+id/q6_c1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q6_c2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q6_c3"
+                                android:layout_width="match_parent"
+                                android:fontFamily="Arial"
+                                android:textColor="@color/an_color"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+
+                            <CheckBox
+                                android:id="@+id/q6_c4"
+                                android:layout_width="match_parent"
+                                android:textColor="@color/an_color"
+                                android:fontFamily="Arial"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="CheckBox" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                </androidx.core.widget.NestedScrollView>>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
 
