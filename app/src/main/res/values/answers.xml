@@ -6,6 +6,8 @@
         <item>"It's a term that stands for Coronavirus Disease 2019, the year it was first identified."</item>
     </string-array>
 
+    <string name="a1_correct">2</string>
+
     <string-array
         name="a2">
         <item>"SARS and influenza"</item>
@@ -13,6 +15,7 @@
         <item>"SARS and HIV"</item>
         <item>"MERS and HIV"</item>
     </string-array>
+    <string name="a2_correct">2</string>
 
     <string-array
         name="a3">
@@ -21,6 +24,7 @@
         <item>"SARS and MERS"</item>
         <item>"None of the above"</item>
     </string-array>
+    <string name="a3_correct">4</string>
 
     <string-array
         name="a4">
@@ -28,5 +32,7 @@
         <item>"100"</item>
         <item>"120+"</item>
     </string-array>
-
+    <string name="a4_correct">3</string>
+    <string name="a5_correct">2</string>
+    <string name="a6_correct">1</string>
 </resources>

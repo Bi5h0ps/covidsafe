@@ -24,9 +24,8 @@ public class TF extends Question{
     public void updateQuestion(View view, Context context) {
         int resID = 0;
 
-        //Get question from xml
-        resID = context.getResources().getIdentifier("q" + questionNum, "string", context.getPackageName());
-        question = questionNum + ". " + context.getString(resID);
+        super.getQuestion(context);
+        super.setQuestion(view, context);
 
         //Set question
         String questionTitle = questionNum + "." + "First question";
@@ -34,6 +33,8 @@ public class TF extends Question{
                 "id", context.getPackageName());
         TextView t = (TextView)view.findViewById(resID);
         t.setText(question);
+
+        super.getCorrectAnswer(context);
 
         //Set check box answer
         String baseCheckBoxID = "q" + questionNum;
@@ -52,5 +53,17 @@ public class TF extends Question{
                     c.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public int validateAnswer(View view, Context context){
+        int mark = 0;
+        String correctAnswerBox = "q" + questionNum + "_c" + Integer.toString(correctAnswer);
+        int resID = context.getResources().getIdentifier(correctAnswerBox, "id", context.getPackageName());
+        CheckBox c = (CheckBox) view.findViewById(resID);
+        if(c.isChecked()){
+            mark = TFFullMark;
+        }
+        return mark;
     }
 }

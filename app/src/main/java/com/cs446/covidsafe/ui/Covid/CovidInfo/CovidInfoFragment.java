@@ -26,6 +26,8 @@ import com.cs446.covidsafe.model.QuestionFactory;
 import com.cs446.covidsafe.model.TravelRestrictions;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +48,8 @@ public class CovidInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private List<Question> questionList = new ArrayList<Question>();
 
     public CovidInfoFragment() {
         // Required empty public constructor
@@ -311,12 +315,28 @@ public class CovidInfoFragment extends Fragment {
         });
     }
 
+    private void registerMarkCalculation() {
+        Button submitButton = (Button) rootView.findViewById(R.id.submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int mark = 0;
+                for(Question question : questionList){
+                    mark += question.validateAnswer(rootView, getContext());
+                }
+                TextView tv = (TextView) rootView.findViewById(R.id.mark);
+                tv.setText("Your mark is: " + Integer.toString(mark) + " !");
+                tv.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     private void setButtonLinks(){
         //Register events for buttons
         setWhoWebLink();
         setCovidStatsLink();
         setCovidUpdatesLink();
         registerExpandEvent();
+        registerMarkCalculation();
     }
 
     private void fillDataSource(){
@@ -326,7 +346,7 @@ public class CovidInfoFragment extends Fragment {
     }
 
     private void fillQuestions(){
-        List<Question> questionList = new ArrayList<Question>();
+
         QuestionFactory qf = new QuestionFactory();
         for(int i = 0; i < 6; i++){
             Question q = qf.getQuestion(i + 1);
