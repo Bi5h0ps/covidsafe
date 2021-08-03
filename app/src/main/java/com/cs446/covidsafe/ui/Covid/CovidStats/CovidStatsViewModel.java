@@ -17,6 +17,7 @@ import java.util.Objects;
 public class CovidStatsViewModel extends AndroidViewModel {
 
     private LiveData<Map<String, Map<String, ProvinceData>>> data;
+    private LiveData<Map<String, Long>> statsData;
     private static final String[] DATA_TYPES = {"deaths", "confirmed", "recovered"};
 
     private HashMap<String, ArrayList<String>> countryList;
@@ -27,6 +28,8 @@ public class CovidStatsViewModel extends AndroidViewModel {
     private String mDataType = "";
     private String mProvince = "All";
 
+    CovidCasesRepository mCovidCasesRepo = null;
+
 
     public CovidStatsViewModel(@NonNull Application application) {
         super(application);
@@ -35,8 +38,9 @@ public class CovidStatsViewModel extends AndroidViewModel {
     public void init() {
         countryList = new HashMap<>();
         provinceList = new ArrayList<>();
-        CovidCasesRepository mCovidCasesRepo = new CovidCasesRepository();
+        mCovidCasesRepo = new CovidCasesRepository();
         data = mCovidCasesRepo.getCovidCasesResponseLiveData();
+        statsData = mCovidCasesRepo.getCovidHistoryResponseLiveData();
         mCovidCasesRepo.getCovidCases(null);
     }
 
@@ -44,9 +48,17 @@ public class CovidStatsViewModel extends AndroidViewModel {
         return data;
     }
 
+    public LiveData<Map<String, Long>> getHistoryStatsData() {
+        return statsData;
+    }
+
     public void onDataTypeSelected(int position) {
         mDataType = DATA_TYPES[position];
     }
+
+    public void requestHistoryData() {
+        mCovidCasesRepo.getCovidHistory(mDataType, mCountry, mProvince);
+    };
 
 
     public void setCountriesAndProvinces() {
@@ -83,5 +95,9 @@ public class CovidStatsViewModel extends AndroidViewModel {
 
     public void onProvinceSelected(int which) {
         mProvince = provinceList.get(which);
+    }
+
+    public boolean isCountrySelected() {
+        return !mCountry.isEmpty();
     }
 }

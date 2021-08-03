@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,7 +34,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CovidStatsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class CovidStatsFragment extends Fragment {
 
     private CovidStatsViewModel viewModel;
     private NavController mNavController;
@@ -47,6 +48,9 @@ public class CovidStatsFragment extends Fragment implements AdapterView.OnItemSe
     @BindView(R.id.province_picker)
     EditText mEditTextProvincePicker;
 
+    @BindView(R.id.search_button)
+    Button mSearchButton;
+
     public CovidStatsFragment() {
         // Required empty public constructor
     }
@@ -57,12 +61,14 @@ public class CovidStatsFragment extends Fragment implements AdapterView.OnItemSe
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(CovidStatsViewModel.class);
         viewModel.init();
-        viewModel.getResponseData().observe(this, new Observer<Map<String, Map<String, ProvinceData>>>() {
-            @Override
-            public void onChanged(Map<String, Map<String, ProvinceData>> countries) {
-                if (countries != null) {
-                    viewModel.setCountriesAndProvinces();
-                }
+        viewModel.getResponseData().observe(this, countries -> {
+            if (countries != null) {
+                viewModel.setCountriesAndProvinces();
+            }
+        });
+        viewModel.getHistoryStatsData().observe(this, stats -> {
+            if (stats != null) {
+                //Update UI
             }
         });
     }
@@ -105,15 +111,27 @@ public class CovidStatsFragment extends Fragment implements AdapterView.OnItemSe
             dialog.show();
         });
 
+        mSearchButton.setOnClickListener(v -> {
+            //make a request
+            if(!viewModel.isCountrySelected()) {
+                Toast.makeText(requireContext(),
+                        "Please select a country", Toast.LENGTH_SHORT).show();
+            } else {
+                viewModel.requestHistoryData();
+            }
+        });
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.onDataTypeSelected(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        viewModel.onDataTypeSelected(position);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) { }
 }
