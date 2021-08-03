@@ -80,6 +80,7 @@ public class VaccineFragment extends Fragment {
 
         FragmentManager fm = getChildFragmentManager();
         mFragmentStateAdapter = new VaccineAdapter(fm, getLifecycle());
+        mViewPager2.setUserInputEnabled(false);
         mViewPager2.setAdapter(mFragmentStateAdapter);
 
         mTabLayout.addTab(mTabLayout.newTab().setText(TAB_1_NAME));
