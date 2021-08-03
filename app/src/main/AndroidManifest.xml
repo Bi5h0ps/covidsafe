@@ -29,7 +29,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB3LAOFV_pMH_a1BzlBWAdjXkkfhlDv5Qw" />
+            android:value="${PLACES_API_KEY}" />
 
         <activity
             android:name=".ui.Splash.SplashActivity"
