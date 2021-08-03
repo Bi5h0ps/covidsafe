@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -38,9 +39,12 @@ dependencies {
     def room_version = "2.3.0"
     def lottieVersion = "3.7.0"
     def retrofitVersion = "2.9.0"
-    
+
+    implementation 'com.google.maps:google-maps-services:0.19.0'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
+
     compile 'org.jetbrains:annotations:15.0'
-    
+    implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -79,4 +83,15 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 }
 
+secrets {
+    // To add your Google Maps Platform API key to this project:
+    // 1. Create or open file local.properties in this folder, which will be ready by default
+    //    by secrets_gradle_plugin
+    // 2. Add this line, replacing YOUR_API_KEY with a key from a project with Places API enabled:
+    //        PLACES_API_KEY=YOUR_API_KEY
+    // 3. Add this line, replacing YOUR_API_KEY with a key from a project with Maps SDK for Android
+    //    enabled (can be the same project and key as in Step 2):
+    //        MAPS_API_KEY=YOUR_API_KEY
+    defaultPropertiesFileName 'local.properties'
+}
 apply plugin: "androidx.navigation.safeargs"
