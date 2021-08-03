@@ -1,10 +1,12 @@
 package com.cs446.covidsafe.repository;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cs446.covidsafe.model.ProvinceData;
+import com.cs446.covidsafe.model.ProvinceHistoryData;
 import com.cs446.covidsafe.network.apis.CovidStatsClient;
 
 
@@ -21,7 +23,7 @@ public class CovidCasesRepository {
 
     private final CovidStatsClient covidStatsClient;
     private MutableLiveData<Map<String, Map<String, ProvinceData>>> covidCasesResponseLiveData;
-    private MutableLiveData<Map<String, Map<String, ProvinceData>>> covidHistoryResponseLiveData;
+    private MutableLiveData<Map<String, Long>> covidHistoryResponseLiveData;
 
     public CovidCasesRepository() {
         covidCasesResponseLiveData = new MutableLiveData<>();
@@ -59,26 +61,25 @@ public class CovidCasesRepository {
         return covidCasesResponseLiveData;
     }
 
-    public void getCovidHistory(String status, @Nullable String country) {
+    public void getCovidHistory(@NonNull String status, @Nullable String country, @Nullable String province) {
         covidStatsClient.getHistory(status, country)
-                .enqueue(new Callback<Map<String, Map<String, ProvinceData>>>() {
+                .enqueue(new Callback<Map<String, ProvinceHistoryData>>() {
 
                     @Override
-                    public void onResponse(Call<Map<String, Map<String, ProvinceData>>> call, Response<Map<String, Map<String, ProvinceData>>> response) {
+                    public void onResponse(Call<Map<String, ProvinceHistoryData>> call, Response<Map<String, ProvinceHistoryData>> response) {
                         if (response.body() != null) {
-                            covidHistoryResponseLiveData.postValue(response.body());
+                            covidHistoryResponseLiveData.postValue(response.body().get(province).getData());
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<Map<String, Map<String, ProvinceData>>> call, Throwable t) {
+                    public void onFailure(Call<Map<String, ProvinceHistoryData>> call, Throwable t) {
                         covidHistoryResponseLiveData.postValue(null);
                     }
-
                 });
     }
 
-    public LiveData<Map<String, Map<String, ProvinceData>>> getCovidHistoryResponseLiveData() {
+    public LiveData<Map<String, Long>> getCovidHistoryResponseLiveData() {
         return covidHistoryResponseLiveData;
     }
 }
