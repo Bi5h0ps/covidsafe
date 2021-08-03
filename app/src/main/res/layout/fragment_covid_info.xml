@@ -17,7 +17,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="400dp"
                 android:layout_margin="20dp"
                 app:cardBackgroundColor="@color/card_bg1"
                 app:cardCornerRadius="20dp"
@@ -37,7 +37,9 @@
                         android:textSize="@dimen/covid_info_title" />
 
                     <ListView
+                        android:nestedScrollingEnabled="true"
                         android:id="@+id/covid_news_list"
+                        android:fadeScrollbars="false"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp">
@@ -49,7 +51,7 @@
 
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="News"
@@ -61,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                app:cardBackgroundColor="@color/card_bg2"
+                app:cardBackgroundColor="@color/card_bg3"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="10dp">
 
@@ -79,10 +81,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Travel Restriction"
+                            android:layout_weight="1"
                             android:textSize="@dimen/covid_info_title" />
 
                         <Spinner
                             android:id="@+id/country_selection"
+                            android:layout_weight="2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -109,191 +113,938 @@
                 android:layout_marginBottom="20dp"
                 android:textSize="@dimen/covid_info_sub_title"/>
 
-            <ScrollView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/FAQ">
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:cardBackgroundColor="@color/card_bg2"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <androidx.core.widget.NestedScrollView
+                    android:id="@+id/FAQ"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:fadeScrollbars="false"
+                    android:scrollbarFadeDuration="0"
+                    android:scrollbars="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp"
+                            android:layout_weight="1"
+                            android:text="Facts about COVID-19"
+                            android:textSize="@dimen/covid_info_title" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="What is COVID19?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandCovidInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/covid_facts"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/covid_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+
+                                <Button
+                                    android:id="@+id/who_web_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Learn more from WHO"
+                                    android:textSize="@dimen/covid_info_sub_title"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="How is COVID-19 transmitted?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandTransmissionInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/transmission"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/covid_transmission_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+
+                                <Button
+                                    android:id="@+id/jumpCovidStatsButton"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
+                                    android:background="@android:color/white"
+                                    android:text="COVID STATS"
+                                    android:textSize="@dimen/covid_info_sub_title"
+                                    android:visibility="gone" />
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="What are the symptoms of COVID-19?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandSymptomsInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+                                <TextView
+
+                                    android:id="@+id/symptom1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
+                                    android:text="The most common symptoms of COVID-19 are:"
+                                    android:textSize="@dimen/covid_info_sub_title"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/symptom2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/covid_common_symptoms"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/symptom3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="15dp"
+                                    android:text="Symptoms of severe COVID‐19 disease include:"
+                                    android:textSize="@dimen/covid_info_sub_title"
+                                    android:visibility="gone" />
+
+                                <TextView
+                                    android:id="@+id/symptom4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="@string/covid_severe_symptoms"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="When should I get a test for COVID-19?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandTestInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/testinfo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/covid_test_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+
+                                <Button
+                                    android:id="@+id/jumpCovidUpdatesButton"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="COVID UPDATES"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="What to do to keep yourself and others safe from COVID-19?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandKeepSafeButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/keepSafeInfoText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/stay_safe_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="How to wear a mask?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandMaskInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/maskInfoText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/mask_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="What is the difference between isolation and quarantine?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandIsolationInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/isolationInfoText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/isolation_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/facts_item_margin"
+                            app:cardBackgroundColor="#7fffd4"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="10dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Are there treatments for COVID-19?"
+                                        android:textSize="@dimen/covid_info_title" />
+
+                                    <ImageButton
+                                        android:id="@+id/expandTreatmentsInfoButton"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="8"
+                                        android:background="@null"
+                                        android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/treatmentsInfoText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:text="@string/treatments_information"
+                                    android:textSize="@dimen/covid_info_text"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Facts"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:textSize="@dimen/covid_info_sub_title"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_margin="20dp"
+                app:cardBackgroundColor="@color/card_bg1"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp"
-                        app:cardBackgroundColor="#7fffd4"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="10dp">
+                        android:text="Covid knowledge test"
+                        android:textSize="@dimen/covid_info_title" />
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/quiz"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:scrollbarFadeDuration="0"
+                        android:scrollbars="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
                             android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="What is COVID19?"
-                                android:textSize="@dimen/covid_info_title" />
 
-                            <TextView
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/q1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="@string/covid_information"
-                                android:textSize="@dimen/covid_info_text" />
+                                android:layout_margin="@dimen/facts_item_margin"
+                                app:cardBackgroundColor="#7fffd4"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="20dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/q1_question"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="q1"
+                                        android:layout_margin="10dp"
+                                        android:textSize="@dimen/covid_info_sub_title"/>
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:id="@+id/q1_c1"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:id="@+id/q1_c2"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:id="@+id/q1_c3"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:id="@+id/q1_c4"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+                                </LinearLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/q2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/facts_item_margin"
+                                app:cardBackgroundColor="#7fffd4"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="10dp">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="20dp"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:id="@+id/q2_question"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="q2"
+                                            android:layout_margin="10dp"
+                                            android:textSize="@dimen/covid_info_sub_title"/>
+
+                                        <CheckBox
+                                            android:id="@+id/q2_c1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/an_color"
+                                            android:fontFamily="Arial"
+                                            android:layout_margin="5dp"
+                                            android:text="CheckBox" />
+
+                                        <CheckBox
+                                            android:id="@+id/q2_c2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:textColor="@color/an_color"
+                                            android:fontFamily="Arial"
+                                            android:layout_margin="5dp"
+                                            android:text="CheckBox" />
+
+                                        <CheckBox
+                                            android:id="@+id/q2_c3"
+                                            android:layout_width="match_parent"
+                                            android:fontFamily="Arial"
+                                            android:textColor="@color/an_color"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:text="CheckBox" />
+
+                                        <CheckBox
+                                            android:id="@+id/q2_c4"
+                                            android:layout_width="match_parent"
+                                            android:textColor="@color/an_color"
+                                            android:fontFamily="Arial"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="5dp"
+                                            android:text="CheckBox" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/q3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/facts_item_margin"
+                                app:cardBackgroundColor="#7fffd4"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="10dp">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="20dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/q3_question"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="q2"
+                                        android:layout_margin="10dp"
+                                        android:textSize="@dimen/covid_info_sub_title"/>
+
+                                    <CheckBox
+                                        android:id="@+id/q3_c1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q3_c2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q3_c3"
+                                        android:layout_width="match_parent"
+                                        android:fontFamily="Arial"
+                                        android:textColor="@color/an_color"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q3_c4"
+                                        android:layout_width="match_parent"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/q4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/facts_item_margin"
+                                app:cardBackgroundColor="#7fffd4"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="10dp">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="20dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/q4_question"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="q4"
+                                        android:layout_margin="10dp"
+                                        android:textSize="@dimen/covid_info_sub_title"/>
+
+                                    <CheckBox
+                                        android:id="@+id/q4_c1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q4_c2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q4_c3"
+                                        android:layout_width="match_parent"
+                                        android:fontFamily="Arial"
+                                        android:textColor="@color/an_color"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q4_c4"
+                                        android:layout_width="match_parent"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/q5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/facts_item_margin"
+                                app:cardBackgroundColor="#7fffd4"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="10dp">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="20dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/q5_question"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="q5"
+                                        android:layout_margin="10dp"
+                                        android:textSize="@dimen/covid_info_sub_title"/>
+
+                                    <CheckBox
+                                        android:id="@+id/q5_c1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q5_c2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q5_c3"
+                                        android:layout_width="match_parent"
+                                        android:fontFamily="Arial"
+                                        android:textColor="@color/an_color"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q5_c4"
+                                        android:layout_width="match_parent"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/q6"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/facts_item_margin"
+                                app:cardBackgroundColor="#7fffd4"
+                                app:cardCornerRadius="20dp"
+                                app:cardElevation="10dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="20dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/q6_question"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="q6"
+                                        android:layout_margin="10dp"
+                                        android:textSize="@dimen/covid_info_sub_title"/>
+
+                                    <CheckBox
+                                        android:id="@+id/q6_c1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q6_c2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q6_c3"
+                                        android:layout_width="match_parent"
+                                        android:fontFamily="Arial"
+                                        android:textColor="@color/an_color"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+
+                                    <CheckBox
+                                        android:id="@+id/q6_c4"
+                                        android:layout_width="match_parent"
+                                        android:textColor="@color/an_color"
+                                        android:fontFamily="Arial"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:text="CheckBox" />
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                                <TextView
+                                    android:id="@+id/mark"
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="invisible"
+                                    android:layout_margin="5dp"
+                                    android:textSize="@dimen/covid_info_title"/>
 
                             <Button
-                                android:id="@+id/who_web_button"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
-                                android:text="Learn more from WHO"
-                                android:textSize="@dimen/covid_info_sub_title" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        app:cardBackgroundColor="#7fffd4"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="20dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="How is COVID-19 transmitted?"
-                                android:textSize="@dimen/covid_info_title" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="@string/covid_transmission_information"
-                                android:textSize="@dimen/covid_info_text" />
-
-                            <Button
-                                android:id="@+id/covid_stats"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
-                                android:background="@android:color/white"
-                                android:text="COVID STATS"
-                                android:textSize="@dimen/covid_info_sub_title" />
-
+                                    android:id="@+id/submit_button"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="10dp"
+                                    android:text="Test my knowledge"
+                                    android:textSize="@dimen/covid_info_sub_title" />
 
                         </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        app:cardBackgroundColor="#7ffff4"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="20dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="What are the symptoms of COVID-19?"
-                                android:textSize="@dimen/covid_info_title" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
-                                android:text="The most common symptoms of COVID-19 are:"
-                                android:textSize="@dimen/covid_info_sub_title" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/covid_common_symptoms"
-                                android:textSize="@dimen/covid_info_text" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
-                                android:text="Symptoms of severe COVID‐19 disease include:"
-                                android:textSize="@dimen/covid_info_sub_title" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/covid_severe_symptoms"
-                                android:textSize="@dimen/covid_info_text" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp"
-                        app:cardBackgroundColor="#7fffd4"
-                        app:cardCornerRadius="20dp"
-                        app:cardElevation="10dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="20dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="When should I get a test for COVID-19?"
-                                android:textSize="@dimen/covid_info_title" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="@string/covid_test_information"
-                                android:textSize="@dimen/covid_info_text" />
-
-                            <Button
-                                android:id="@+id/covid_updates_button"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="COVID UPDATES" />
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
+                    </androidx.core.widget.NestedScrollView>
                 </LinearLayout>
-            </ScrollView>
+            </androidx.cardview.widget.CardView>
+
             <TextView
-                android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="FAQ"
+                android:text="Quiz
+"
                 android:gravity="center"
                 android:layout_marginBottom="20dp"
                 android:textSize="@dimen/covid_info_sub_title"/>
+
         </LinearLayout>
     </ScrollView>
 

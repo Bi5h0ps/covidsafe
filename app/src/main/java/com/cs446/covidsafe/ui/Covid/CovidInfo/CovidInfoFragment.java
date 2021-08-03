@@ -12,15 +12,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cs446.covidsafe.R;
+import com.cs446.covidsafe.model.CovidNews;
+import com.cs446.covidsafe.model.Question;
+import com.cs446.covidsafe.model.QuestionFactory;
+import com.cs446.covidsafe.model.TravelRestrictions;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +48,8 @@ public class CovidInfoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private List<Question> questionList = new ArrayList<Question>();
 
     public CovidInfoFragment() {
         // Required empty public constructor
@@ -73,63 +85,57 @@ public class CovidInfoFragment extends Fragment {
 
 
     public void fillCovidNews(){
-        //Todo: Find an API to generate covid news
-        List<News> news_data = new ArrayList<News>();
-        // add some data
-        news_data.add(new News("NSW COVID-19 cases set to surge today as infections grow in south-west Sydney",
-                                "https://www.abc.net.au/news/2021-07-08/nsw-braces-for-rise-in-covid19-cases-in-south-west-sydney/100275184"));
-        news_data.add(new News("Global Covid-19 death toll surpasses 4 million",
-                                "https://www.reuters.com/world/asia-pacific/japan-set-declare-state-emergency-tokyo-area-through-aug-22-minister-2021-07-08/"));
-        news_data.add(new News("COVID-19: Double-jabbed Britons will be allowed to travel to 140 amber list countries with no quarantine on return",
-                                "https://news.sky.com/story/covid-19-summer-holidays-set-for-take-off-govt-to-allow-fully-vaccinated-travellers-to-avoid-quarantine-rules-12351279"));
-        //news_data.add(new News("Spectators to face Olympic ban as Tokyo declares coronavirus emergency-report",
-        //                           "https://www.reuters.com/world/asia-pacific/japan-set-declare-state-emergency-tokyo-area-through-aug-22-minister-2021-07-08/"));
-        ArrayAdapter adapter = new ArrayAdapter<News>(getActivity(), android.R.layout.simple_selectable_list_item, news_data);
+        CovidNews covid_news = new CovidNews();
+        String[] from = {"news_image", "news_title", "weblink"};
+        int[] to = {R.id.news_image, R.id.news_title, R.id.weblink};
+        SimpleAdapter adapter = new SimpleAdapter(getActivity(), covid_news.getCovidNewsList(),
+                R.layout.covid_news_listview_item, from, to) {
+            @Override
+            public void setViewImage(final ImageView v, final String value) {
+                Picasso.get().load(value).into(v);
+            }
+        };
+        covid_news.pullNews(adapter);
         ListView covid_news_list = rootView.findViewById(R.id.covid_news_list);
         covid_news_list.setAdapter(adapter);
         covid_news_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String url = ((News) adapter.getItem(position)).getLink();
+                String url = ((TextView) view.findViewById(R.id.weblink)).getText().toString();
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
             }
         });
     }
+
     private void setCovidStatsLink(){
-        Button who_web_button = (Button) rootView.findViewById(R.id.who_web_button);
-        who_web_button.setOnClickListener(new View.OnClickListener() {
+        // TODO: add logic here:
+        // When the user clicks the button, it should jump to the covid stats page
+        Button jumpCovidStatsButton = (Button) rootView.findViewById(R.id.jumpCovidStatsButton);
+        jumpCovidStatsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String url = "https://www.who.int/";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+
             }
         });
     }
+
+    private void setCovidUpdatesLink() {
+        // TODO: add logic here:
+        // When the user clicks the button, it should jump to the covid updates page
+        Button jumpCovidUpdatesButton = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
+        jumpCovidUpdatesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
 
     private void fillSpinnerSource(){
-        //Todo: Find an API to fill the countries
-        List<String> country_data = new ArrayList<String>();
-        List<String> restriction = new ArrayList<String>();
-
-        //Need to use an API here
-        country_data.add("Canada");
-        country_data.add("US");
-
-        restriction.add("To protect Canadians from the outbreak of COVID-19, the Prime Minister " +
-                "announced travel restrictions that limit travel to Canada. Until further notice, most foreign " +
-                "nationals cannot travel to Canada, even if they have a valid visitor visa or electronic travel " +
-                "authorization (eTA).\n" +
-                "\n" +
-                "These restrictions stop most non-essential (discretionary) travel to Canada.");
-        restriction.add("Effective January 26, 2021, all airline passengers to the United States " +
-                "ages two years and older must provide a negative COVID-19 viral test taken within three calendar days of travel.  " +
-                "Alternatively, travelers to the U.S. may provide documentation from a licensed health care provider of having " +
-                "recovered from COVID-19 in the 90 days preceding travel.");
-
-        //Need to use an API here
+        TravelRestrictions tr = new TravelRestrictions();
+        HashMap<String, String> restriction_data = tr.getRestrictionData();
+        List<String> country_data = tr.getCountryData();
 
         Spinner country_selection = (Spinner) rootView.findViewById(R.id.country_selection);
         ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, country_data);
@@ -138,21 +144,166 @@ public class CovidInfoFragment extends Fragment {
 
         country_selection.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView travel_restriction = (TextView) rootView.findViewById(R.id.travel_restriction);
-                travel_restriction.setText(restriction.get(country_selection.getSelectedItemPosition()));
+
+                String restrictionContent = restriction_data.get(country_selection.getSelectedItem().toString());
+                System.out.println(restriction_data.size());
+                travel_restriction.setText(restrictionContent);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // TODO Auto-generated method stub
+
             }
         });
-        country_selection.setSelection(0);
+        country_selection.setSelection(2);
     }
 
-    private void setWhoWebLink(){
+    public void registerExpandEvent() {
+        //Implement the expandable item list function
+        //For covid info section
+        ImageButton button1 = (ImageButton) rootView.findViewById(R.id.expandCovidInfoButton);
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.covid_facts);
+                Button bv = (Button) rootView.findViewById(R.id.who_web_button);
+                if(tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    bv.setVisibility(View.VISIBLE);
+                    button1.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                }else {
+                    tv.setVisibility(View.GONE);
+                    bv.setVisibility(View.GONE);
+                    button1.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        //For COVID transmission info section
+        ImageButton button2 = (ImageButton) rootView.findViewById(R.id.expandTransmissionInfoButton);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.transmission);
+                Button bv = (Button) rootView.findViewById(R.id.jumpCovidStatsButton);
+                if(tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    bv.setVisibility(View.VISIBLE);
+                    button2.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                }else {
+                    tv.setVisibility(View.GONE);
+                    bv.setVisibility(View.GONE);
+                    button2.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        //For COVID symptoms info section
+        ImageButton button3 = (ImageButton) rootView.findViewById(R.id.expandSymptomsInfoButton);
+        button3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv1 = (TextView) rootView.findViewById(R.id.symptom1);
+                TextView tv2 = (TextView) rootView.findViewById(R.id.symptom2);
+                TextView tv3 = (TextView) rootView.findViewById(R.id.symptom3);
+                TextView tv4 = (TextView) rootView.findViewById(R.id.symptom4);
+                if (tv1.getVisibility() == View.GONE) {
+                    tv1.setVisibility(View.VISIBLE);
+                    tv2.setVisibility(View.VISIBLE);
+                    tv3.setVisibility(View.VISIBLE);
+                    tv4.setVisibility(View.VISIBLE);
+                    button3.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv1.setVisibility(View.GONE);
+                    tv2.setVisibility(View.GONE);
+                    tv3.setVisibility(View.GONE);
+                    tv4.setVisibility(View.GONE);
+                    button3.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+
+            }
+        });
+
+        //For COVID test info section
+        ImageButton button4 = (ImageButton) rootView.findViewById(R.id.expandTestInfoButton);
+        button4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.testinfo);
+                Button bv = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    bv.setVisibility(View.VISIBLE);
+                    button4.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    bv.setVisibility(View.GONE);
+                    button4.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        //For keep safe info section
+        ImageButton button5 = (ImageButton) rootView.findViewById(R.id.expandKeepSafeButton);
+        button5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.keepSafeInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button5.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button5.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        //For mask info section
+        ImageButton button6 = (ImageButton) rootView.findViewById(R.id.expandMaskInfoButton);
+        button6.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.maskInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button6.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button6.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        //For isolation info section
+        ImageButton button7 = (ImageButton) rootView.findViewById(R.id.expandIsolationInfoButton);
+        button7.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.isolationInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button7.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button7.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+
+        //For treatments info section
+        ImageButton button8 = (ImageButton) rootView.findViewById(R.id.expandTreatmentsInfoButton);
+        button8.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TextView tv = (TextView) rootView.findViewById(R.id.treatmentsInfoText);
+                if (tv.getVisibility() == View.GONE) {
+                    tv.setVisibility(View.VISIBLE);
+                    button8.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
+                } else {
+                    tv.setVisibility(View.GONE);
+                    button8.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
+                }
+            }
+        });
+    }
+
+    private void setWhoWebLink() {
+        //When the user clicks the button, it should jump to who website
        Button who_web_button = (Button) rootView.findViewById(R.id.who_web_button);
        who_web_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -164,15 +315,49 @@ public class CovidInfoFragment extends Fragment {
         });
     }
 
+    private void registerMarkCalculation() {
+        Button submitButton = (Button) rootView.findViewById(R.id.submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int mark = 0;
+                for(Question question : questionList){
+                    mark += question.validateAnswer(rootView, getContext());
+                }
+                TextView tv = (TextView) rootView.findViewById(R.id.mark);
+                tv.setText("Your mark is: " + Integer.toString(mark) + " !");
+                tv.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     private void setButtonLinks(){
+        //Register events for buttons
         setWhoWebLink();
         setCovidStatsLink();
+        setCovidUpdatesLink();
+        registerExpandEvent();
+        registerMarkCalculation();
     }
+
     private void fillDataSource(){
+        //Fill data sources
         fillCovidNews();
         fillSpinnerSource();
     }
 
+    private void fillQuestions(){
+
+        QuestionFactory qf = new QuestionFactory();
+        for(int i = 0; i < 6; i++){
+            Question q = qf.getQuestion(i + 1);
+            q.updateQuestion(rootView, this.getContext());
+            questionList.add(q);
+        }
+    }
+
+    private void calculateMarks() {
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -180,6 +365,7 @@ public class CovidInfoFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_covid_info, container, false);
         fillDataSource();
         setButtonLinks();
+        fillQuestions();
         return rootView;
     }
 }
