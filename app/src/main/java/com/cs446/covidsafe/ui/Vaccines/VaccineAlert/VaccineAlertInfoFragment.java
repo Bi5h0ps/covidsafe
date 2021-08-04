@@ -1,8 +1,12 @@
 package com.cs446.covidsafe.ui.Vaccines.VaccineAlert;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,14 +78,31 @@ public class VaccineAlertInfoFragment extends Fragment {
         EditText location = (EditText) view.findViewById(R.id.VaccineAlertInfo_FirstDoseLocation);
         Spinner type = (Spinner) view.findViewById(R.id.VaccineAlertInfo_FirstDoseType);
 
+//        time.setVisibility(View.GONE);
+//        date.setVisibility(View.GONE);
+//        location.setVisibility(View.GONE);
+//        type.setVisibility(View.GONE);
+
 
         button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                button.setVisibility(View.GONE);
-                time.setVisibility(View.VISIBLE);
-                date.setVisibility(View.VISIBLE);
-                location.setVisibility(View.VISIBLE);
-                type.setVisibility(View.VISIBLE);
+            public void onClick(View vm) {
+
+                // retrieve shared preferences
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("vaccInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("vaccTime", String.valueOf(time.getText()));
+                editor.putString("vaccDate", String.valueOf(date.getText()));
+                editor.putString("vaccLocation", String.valueOf(location.getText()));
+                editor.putString("vaccType", type.getSelectedItem().toString());
+                editor.putBoolean("isVaccinated", true);
+                editor.commit();
+
+                // Call the alerts page
+                VaccineAlertFragmentOld alertsPage = new VaccineAlertFragmentOld();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.alertFragmentContainerView, alertsPage  );
+                fragmentTransaction.commit();
             }
         });
 

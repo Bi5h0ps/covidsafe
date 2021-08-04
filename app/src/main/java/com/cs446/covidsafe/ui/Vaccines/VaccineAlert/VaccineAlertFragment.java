@@ -19,10 +19,55 @@ import android.view.ViewGroup;
 
 import com.cs446.covidsafe.R;
 
+import java.util.Map;
+
 public class VaccineAlertFragment extends Fragment {
 
     private VaccineAlertViewModel mViewModel;
+    private void childFragmentSelector()
+    {
 
+        // retrieve shared preferences
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("vaccInfo", Context.MODE_PRIVATE);
+//        Log.d("myLog", sharedPreferences.toString());
+
+        Map<String,?> keys = sharedPreferences.getAll();
+
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.d("myLog",entry.getKey() + ": " +
+                    entry.getValue().toString());
+        }
+
+        // if user has already been vaccinated
+        Boolean isVaccinated = sharedPreferences.getBoolean("isVaccinated", false);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // the alerts page
+        VaccineAlertFragmentOld alertsPage = new VaccineAlertFragmentOld();
+        // the other page
+        VaccineAlertInfoFragment infoPage = new VaccineAlertInfoFragment();
+
+        if(fragmentManager.findFragmentByTag("alertsPage") != null)
+        {
+            fragmentTransaction.remove(alertsPage);
+        }
+        else if(fragmentManager.findFragmentByTag("infoPage") != null)
+        {
+            fragmentTransaction.remove(infoPage);
+        }
+
+            if(isVaccinated)
+        {
+            fragmentTransaction.add(R.id.alertFragmentContainerView, alertsPage, "alertsPage");
+        }
+        else
+        {
+            fragmentTransaction.add(R.id.alertFragmentContainerView, infoPage, "infoPage");
+        }
+        fragmentTransaction.commit();
+
+    }
 
 
     public static VaccineAlertFragment newInstance() {
@@ -33,32 +78,18 @@ public class VaccineAlertFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        // retrieve shared preferences
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("vaccInfo", Context.MODE_PRIVATE);
-
-        // if user has already been vaccinated
-        Boolean isVaccinated = sharedPreferences.getBoolean("isVaccinated", false);
-        if(isVaccinated)
-        {
-            // Call the alerts page
-            VaccineAlertFragmentOld alertsPage = new VaccineAlertFragmentOld();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.alertFragmentContainerView, alertsPage  );
-            fragmentTransaction.commit();
-        }
-        else
-        {
-            // Call the other page
-            VaccineAlertInfoFragment alertsPage = new VaccineAlertInfoFragment();
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.alertFragmentContainerView, alertsPage  );
-            fragmentTransaction.commit();
-        }
-
+        childFragmentSelector();
         return inflater.inflate(R.layout.vaccine_alert_fragment, container, false);
     }
+
+    @Override
+    public void onResume () {
+        Log.d("myLog", "do we resume?");
+        childFragmentSelector();
+        super.onResume();
+    }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
