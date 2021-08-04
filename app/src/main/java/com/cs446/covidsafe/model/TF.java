@@ -14,7 +14,6 @@ import java.util.List;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 public class TF extends Question{
-    String[] answers;
 
     public TF(int questionNum){
         super(questionNum);

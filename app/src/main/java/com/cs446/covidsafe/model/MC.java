@@ -14,7 +14,7 @@ import java.util.List;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 public class MC extends Question{
-    String[] answers;
+
 
     public MC(int questionNum){
         super(questionNum);

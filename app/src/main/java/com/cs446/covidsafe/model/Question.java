@@ -15,6 +15,7 @@ public abstract class Question {
     protected int correctAnswer;
     protected int questionNum;
     protected String question;
+    protected String[] answers;
     public Question(int num){
         questionNum = num;
     }
