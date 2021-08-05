@@ -45,10 +45,9 @@
             android:paddingBottom="8px">
 
             <TextView
-                android:id="@+id/firstDoseData"
+                android:id="@+id/vaccineAlertInfo_firstDoseData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="You recieved your first dose of the Pfizer-BioNTech vaccine at 1:28 PM on 16 June at The Boardwalk. You have not yet indicated a scheduled apartment for your second dose."
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -65,10 +64,9 @@
             android:paddingBottom="8px">
 
             <TextView
-                android:id="@+id/secondDoseData"
+                android:id="@+id/vaccineAlertInfo_secondDoseData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="The earliest recommended timing for your second dose is on 7 July. The last possible recommended timing for your second dose is on 28 July. "
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

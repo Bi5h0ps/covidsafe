@@ -58,7 +58,7 @@ public class VaccineAlertFragment extends Fragment {
             fragmentTransaction.remove(infoPage);
         }
 
-            if(isVaccinated)
+        if(isVaccinated)
         {
             fragmentTransaction.add(R.id.alertFragmentContainerView, alertsPage, "alertsPage");
         }

@@ -57,6 +57,9 @@
         </item>
     </string-array>
 
+<!--    <string name="vaccineAlertInfo_firstDoseData">You received your first dose of the <b>%1$s vaccine</b> on <b>%2$d %3$s</b> at <b>%4$s</b>.</string>-->
+<!--    <string name="vaccineAlertInfo_secondDoseData">The optimal time to receive the second dose of the <b>%1$s vaccine</b> is after <b>%2$d %3$s</b> at <b>%4$s</b>.</string>-->
+
     <string-array name="reminder_settings">
         <item>1 week, 3 days, and 1 day prior</item>
         <item>3 days and 1 day prior</item>
