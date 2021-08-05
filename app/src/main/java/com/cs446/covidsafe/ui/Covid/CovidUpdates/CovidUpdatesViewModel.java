@@ -5,22 +5,19 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.cs446.covidsafe.model.ProvinceData;
 import com.cs446.covidsafe.repository.CovidCasesRepository;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class CovidUpdatesViewModel extends AndroidViewModel {
 
-    private LiveData<Map<String, Map<String, ProvinceData>>> data;
-    private static final String[] DATA_TYPES = {"deaths", "confirmed", "recovered"};
 
-    private String mCountry = "";
-    private String mDataType = "";
-    private String mProvince = "";
+    private LiveData<Map<String, Long>> data;
+
+    private CovidCasesRepository DeathsDataCovidCasesRepo;
+    private CovidCasesRepository ConfirmedDataCovidCasesRepo;
+    private CovidCasesRepository RecoveredDataCovidCasesRepo;
 
 
     public CovidUpdatesViewModel(@NonNull Application application) {
@@ -28,17 +25,27 @@ public class CovidUpdatesViewModel extends AndroidViewModel {
     }
 
     public void init() {
-        CovidCasesRepository mCovidCasesRepo = new CovidCasesRepository();
-        data = mCovidCasesRepo.getCovidCasesResponseLiveData();
-        mCovidCasesRepo.getCovidCases(null);
+        DeathsDataCovidCasesRepo = new CovidCasesRepository();
+        ConfirmedDataCovidCasesRepo = new CovidCasesRepository();
+        RecoveredDataCovidCasesRepo = new CovidCasesRepository();
     }
 
-    public LiveData<Map<String, Map<String, ProvinceData>>> getResponseData() {
+    public LiveData<Map<String, Long>> getResponseData(String status) {
+        switch (status) {
+            case "Deaths":
+                DeathsDataCovidCasesRepo.getCovidHistory(status, "Canada", "All");
+                data = DeathsDataCovidCasesRepo.getCovidHistoryResponseLiveData();
+                break;
+            case "Confirmed":
+                ConfirmedDataCovidCasesRepo.getCovidHistory(status, "Canada", "All");
+                data = ConfirmedDataCovidCasesRepo.getCovidHistoryResponseLiveData();
+                break;
+            case "Recovered":
+                RecoveredDataCovidCasesRepo.getCovidHistory(status, "Canada", "All");
+                data = RecoveredDataCovidCasesRepo.getCovidHistoryResponseLiveData();
+                break;
+        }
         return data;
-    }
-
-    public void onDataTypeSelected(int position) {
-        mDataType = DATA_TYPES[position];
     }
 
 }
