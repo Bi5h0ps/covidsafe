@@ -55,7 +55,7 @@ public class VaccineAlertFragment extends Fragment {
         }
         else if(fragmentManager.findFragmentByTag("infoPage") != null)
         {
-            fragmentTransaction.remove(infoPage);
+            fragmentTransaction.remove(infoPage)    ;
         }
 
         if(isVaccinated)
