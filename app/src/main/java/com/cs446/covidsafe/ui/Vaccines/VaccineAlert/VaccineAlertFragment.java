@@ -23,12 +23,20 @@ import java.util.Map;
 
 public class VaccineAlertFragment extends Fragment {
 
-    private VaccineAlertViewModel mViewModel;
+    // the alerts page
+    VaccineAlertInfoFragment alertsPage = new VaccineAlertInfoFragment();
+    // the other page
+    VaccineAlertInputFragment infoPage = new VaccineAlertInputFragment();
+
     private void childFragmentSelector()
     {
 
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
         // retrieve shared preferences
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("vaccInfo", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences;
+        sharedPreferences= getActivity().getSharedPreferences("vaccInfo", Context.MODE_PRIVATE);
 //        Log.d("myLog", sharedPreferences.toString());
 
         Map<String,?> keys = sharedPreferences.getAll();
@@ -40,13 +48,6 @@ public class VaccineAlertFragment extends Fragment {
 
         // if user has already been vaccinated
         Boolean isVaccinated = sharedPreferences.getBoolean("isVaccinated", false);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // the alerts page
-        VaccineAlertFragmentOld alertsPage = new VaccineAlertFragmentOld();
-        // the other page
-        VaccineAlertInfoFragment infoPage = new VaccineAlertInfoFragment();
 
         if(fragmentManager.findFragmentByTag("alertsPage") != null)
         {
@@ -91,11 +92,11 @@ public class VaccineAlertFragment extends Fragment {
 
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(VaccineAlertViewModel.class);
-        // TODO: Use the ViewModel
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        mViewModel = new ViewModelProvider(this).get(VaccineAlertViewModel.class);
+//        // TODO: Use the ViewModel
+//    }
 
 }

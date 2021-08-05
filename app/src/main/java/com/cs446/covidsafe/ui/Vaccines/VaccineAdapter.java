@@ -8,7 +8,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.cs446.covidsafe.ui.Vaccines.VaccineAlert.VaccineAlertFragment;
 import com.cs446.covidsafe.ui.Vaccines.VaccineLocation.VaccineLocationFragment;
-import com.cs446.covidsafe.ui.Vaccines.VaccineAlert.VaccineAlertFragmentOld;
 import com.cs446.covidsafe.ui.Vaccines.VaccineInfo.VaccineInfoFragment;
 
 public class VaccineAdapter extends FragmentStateAdapter {
