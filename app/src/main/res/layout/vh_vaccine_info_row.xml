@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardBackgroundColor="@color/card_bg1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,7 +27,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="4dp"
                 android:text="Vaccine Type"
-                android:textSize="24sp"
+                android:textSize="24dp"
+                android:background="#F5DEB8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,8 +44,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
                     android:text="Description"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
             </RelativeLayout>
 
