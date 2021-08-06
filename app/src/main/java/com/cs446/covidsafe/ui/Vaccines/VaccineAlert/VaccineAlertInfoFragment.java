@@ -45,6 +45,8 @@ public class VaccineAlertInfoFragment extends Fragment {
     private String location;
     private String type;
 
+    private String[] period = {"1 week", "3 days", "1 day"};
+
     private boolean notifsEnabled;
     private boolean firstTimingNotifEnabled;
     private boolean secondTimingNotifEnabled;
@@ -68,6 +70,7 @@ public class VaccineAlertInfoFragment extends Fragment {
 
         AlarmManager alarms = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         VaccineAlertNotificationReceiver receiver = new VaccineAlertNotificationReceiver();
+        VaccineAlertNotificationReceiver receiver2 = new VaccineAlertNotificationReceiver();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vaccine_alert, container, false);
@@ -102,22 +105,6 @@ public class VaccineAlertInfoFragment extends Fragment {
         Spinner latestTimingSpinner = (Spinner) view.findViewById(R.id.latestTimingSpinner);
         // -----------------------------------------------------------------------------------------------------
 
-
-        IntentFilter filter = new IntentFilter("ALARM_ACTION");
-        requireActivity().registerReceiver(receiver, filter);
-
-        Calendar cal = Calendar.getInstance();
-
-        cal.setTimeInMillis(System.currentTimeMillis());
-        cal.clear();
-        cal.set(2021,7,6,2,10);
-
-        Intent intent = new Intent("ALARM_ACTION");
-        intent.putExtra("param", "My scheduled action");
-        PendingIntent operation = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-        // I choose 3s after the launch of my application
-        alarms.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+3000, operation) ;
-
         // First dose info textview ---------------------------------------------------------------
         String monthStr = new DateFormatSymbols().getMonths()[month-1];
         vaccineAlertInfo_firstDoseData.setText("You received your first dose of the " + type + " vaccine on " + day + " " + monthStr + ", " + year + " at " + location + ".");
@@ -125,9 +112,11 @@ public class VaccineAlertInfoFragment extends Fragment {
 
         // Second dose info textview ---------------------------------------------------------------
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
+        Calendar earlyReminder = Calendar.getInstance();
+        Calendar lateReminder = Calendar.getInstance();
         try {
-            c.setTime(sdf.parse(year + "-" + month + "-" + day));
+            earlyReminder.setTime(sdf.parse(year + "-" + month + "-" + day));
+            lateReminder.setTime(sdf.parse(year + "-" + month + "-" + day));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -137,10 +126,10 @@ public class VaccineAlertInfoFragment extends Fragment {
         // Moderna
         if(type.equals(getResources().getStringArray(R.array.vaccine_types)[0]))
         {
-            c.add(Calendar.MONTH, 1);
-            secondDate = c.get(Calendar.DAY_OF_MONTH);
-            secondMonth = c.get(Calendar.MONTH) + 1;
-            secondYear = c.get(Calendar.YEAR);
+            earlyReminder.add(Calendar.MONTH, 1);
+            secondDate = earlyReminder.get(Calendar.DAY_OF_MONTH);
+            secondMonth = earlyReminder.get(Calendar.MONTH) + 1;
+            secondYear = earlyReminder.get(Calendar.YEAR);
 
             String secondMonthStr = new DateFormatSymbols().getMonths()[secondMonth-1];
             secondDoseData = "The recommended timing for your second dose is on " + secondDate + " " + secondMonthStr + " " + secondYear + ".";
@@ -153,10 +142,10 @@ public class VaccineAlertInfoFragment extends Fragment {
         // Pfizer
         else if(type.equals(getResources().getStringArray(R.array.vaccine_types)[1]))
         {
-            c.add(Calendar.DATE, 21);
-            secondDate = c.get(Calendar.DAY_OF_MONTH);
-            secondMonth = c.get(Calendar.MONTH) + 1;
-            secondYear = c.get(Calendar.YEAR);
+            earlyReminder.add(Calendar.DATE, 21);
+            secondDate = earlyReminder.get(Calendar.DAY_OF_MONTH);
+            secondMonth = earlyReminder.get(Calendar.MONTH) + 1;
+            secondYear = earlyReminder.get(Calendar.YEAR);
 
             String secondMonthStr = new DateFormatSymbols().getMonths()[secondMonth-1];
             secondDoseData = "The recommended timing for your second dose is on " + secondDate + " " + secondMonthStr + " " + secondYear + ".";
@@ -170,16 +159,16 @@ public class VaccineAlertInfoFragment extends Fragment {
         else if(type.equals(getResources().getStringArray(R.array.vaccine_types)[2]))
         {
             // Date Range Start
-            c.add(Calendar.WEEK_OF_YEAR, 4);
-            secondDate = c.get(Calendar.DAY_OF_MONTH);
-            secondMonth = c.get(Calendar.MONTH) + 1;
-            secondYear = c.get(Calendar.YEAR);
+            earlyReminder.add(Calendar.WEEK_OF_YEAR, 4);
+            secondDate = earlyReminder.get(Calendar.DAY_OF_MONTH);
+            secondMonth = earlyReminder.get(Calendar.MONTH) + 1;
+            secondYear = earlyReminder.get(Calendar.YEAR);
 
             // Date Range End
-            c.add(Calendar.WEEK_OF_YEAR, 8);
-            secondFinalDate = c.get(Calendar.DAY_OF_MONTH);
-            secondFinalMonth = c.get(Calendar.MONTH) + 1;
-            secondFinalYear = c.get(Calendar.YEAR);
+            lateReminder.add(Calendar.WEEK_OF_YEAR, 12);
+            secondFinalDate = earlyReminder.get(Calendar.DAY_OF_MONTH);
+            secondFinalMonth = earlyReminder.get(Calendar.MONTH) + 1;
+            secondFinalYear = earlyReminder.get(Calendar.YEAR);
 
             String secondMonthStr = new DateFormatSymbols().getMonths()[secondMonth-1];
             String secondFinalMonthStr = new DateFormatSymbols().getMonths()[secondFinalMonth-1];
@@ -213,6 +202,16 @@ public class VaccineAlertInfoFragment extends Fragment {
 
                 if(firstTimingNotifEnabled)
                 {
+                    IntentFilter filter = new IntentFilter("ALARM_ACTION");
+                    requireActivity().registerReceiver(receiver, filter);
+
+                    SimpleDateFormat format = new SimpleDateFormat("d MMMM yyyy");
+
+                    Intent intent = new Intent("ALARM_ACTION");
+                    intent.putExtra("param", "In " + period[firstTimingNotifSetting] + " on " + format.format(earlyReminder.getTime()) + " is the earliest recommended timing for your second dose");
+                    PendingIntent operation = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+                    alarms.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+3000, operation) ;
+//                    alarms.set(AlarmManager.RTC_WAKEUP, earlyReminder.getTimeInMillis(), operation2) ;
                     earliestTimingSpinner.setEnabled(true);
                 }
                 else
@@ -235,6 +234,16 @@ public class VaccineAlertInfoFragment extends Fragment {
 
                 if(secondTimingNotifEnabled)
                 {
+                    IntentFilter filter2 = new IntentFilter("ALARM_ACTION2");
+                    requireActivity().registerReceiver(receiver2, filter2);
+
+                    SimpleDateFormat format = new SimpleDateFormat("d MMMM yyyy");
+
+                    Intent intent2 = new Intent("ALARM_ACTION2");
+                    intent2.putExtra("param", "In " + period[secondTimingNotifSetting] + " on " + format.format(lateReminder.getTime()) + " is the latest recommended timing for your second dose");
+                    PendingIntent operation2 = PendingIntent.getBroadcast(getActivity(), 0, intent2, 0);
+                    alarms.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+3000, operation2) ;
+//                    alarms.set(AlarmManager.RTC_WAKEUP, lateReminder.getTimeInMillis(), operation2) ;
                     latestTimingSpinner.setEnabled(true);
                 }
                 else
@@ -304,9 +313,6 @@ public class VaccineAlertInfoFragment extends Fragment {
             }
         });
         // -----------------------------------------------------------------------------------------------------
-
-
-
 
         return view;
     }
