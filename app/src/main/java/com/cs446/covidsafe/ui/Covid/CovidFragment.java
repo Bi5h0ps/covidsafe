@@ -81,6 +81,7 @@ public class CovidFragment extends Fragment {
 
         FragmentManager fm = getChildFragmentManager();
         mFragmentStateAdapter = new CovidAdapter(fm, getLifecycle());
+        mViewPager2.setUserInputEnabled(false);
         mViewPager2.setAdapter(mFragmentStateAdapter);
 
         mTabLayout.addTab(mTabLayout.newTab().setText(TAB_1_NAME));

@@ -1,5 +1,7 @@
 package com.cs446.covidsafe.repository;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -8,7 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.cs446.covidsafe.model.ProvinceData;
 import com.cs446.covidsafe.model.ProvinceHistoryData;
 import com.cs446.covidsafe.network.apis.CovidStatsClient;
-
 
 import java.util.Map;
 
@@ -68,7 +69,9 @@ public class CovidCasesRepository {
                     @Override
                     public void onResponse(Call<Map<String, ProvinceHistoryData>> call, Response<Map<String, ProvinceHistoryData>> response) {
                         if (response.body() != null) {
-                            covidHistoryResponseLiveData.postValue(response.body().get(province).getData());
+                            if (response.body().get(province) != null) {
+                                covidHistoryResponseLiveData.postValue(response.body().get(province).getData());
+                            }
                         }
                     }
 
