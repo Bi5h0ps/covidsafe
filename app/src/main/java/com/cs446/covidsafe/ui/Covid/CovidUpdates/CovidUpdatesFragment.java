@@ -1,33 +1,28 @@
 package com.cs446.covidsafe.ui.Covid.CovidUpdates;
 
-import android.app.Notification;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cs446.covidsafe.R;
-import com.cs446.covidsafe.model.ProvinceData;
-import com.cs446.covidsafe.ui.Main.MainActivity;
+import com.cs446.covidsafe.ui.Main.NotificationReceiver;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -35,11 +30,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -184,7 +175,7 @@ public class CovidUpdatesFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 //Calendar calendar = Calendar.getInstance();
-                String CHANNEL_ID = "chat";
+/*                String CHANNEL_ID = "chat";
                 if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O){
                     NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
                             "chat",
@@ -194,41 +185,28 @@ public class CovidUpdatesFragment extends Fragment {
                 }
 
                 mNotificationManager.notify(1, createNotification(false));
-                Toast.makeText(getActivity(), "Show Notification clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Show Notification clicked", Toast.LENGTH_SHORT).show();*/
+
+                String CHANNEL_ID = "chat";
+                if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O){
+                    NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                            "chat",
+                            NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+                    manager.createNotificationChannel(channel);
+                }
+
+                Calendar cal = Calendar.getInstance();
+                Intent intent = new Intent(getActivity(), NotificationReceiver.class);
+                intent.setAction("notify");
+
+                PendingIntent sender = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Long time = cal.getTimeInMillis()+1*1000;
+
+                AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                am.set(AlarmManager.RTC_WAKEUP, time, sender);
+                //Toast.makeText(getActivity(), "Show Notification clicked", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    /**
-     * Creates a new notification depending on the argument.
-     *
-     * @param makeHeadsUpNotification A boolean value to indicating whether a notification will be
-     *                                created as a heads-up notification or not.
-     *                                <ul>
-     *                                <li>true : Creates a heads-up notification.</li>
-     *                                <li>false : Creates a non-heads-up notification.</li>
-     *                                </ul>
-     *
-     * @return A Notification instance.
-     */
-    private Notification createNotification(boolean makeHeadsUpNotification) {
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity(), "chat")
-                .setSmallIcon(R.drawable.covid)
-                .setPriority(Notification.PRIORITY_DEFAULT)
-                .setCategory(Notification.CATEGORY_MESSAGE)
-                .setContentTitle("Sample Notification")
-                .setContentText("This is a normal notification.");
-        if (makeHeadsUpNotification) {
-            Intent push = new Intent();
-            push.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            push.setClass(getActivity(), MainActivity.class);
-
-            PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(getActivity(), 0,
-                    push, PendingIntent.FLAG_CANCEL_CURRENT);
-            notificationBuilder
-                    .setContentText("Heads-Up Notification on Android L or above.")
-                    .setFullScreenIntent(fullScreenPendingIntent, true);
-        }
-        return notificationBuilder.build();
     }
 }
