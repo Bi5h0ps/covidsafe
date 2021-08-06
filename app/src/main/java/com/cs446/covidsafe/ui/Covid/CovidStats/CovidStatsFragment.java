@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import butterknife.BindView;
@@ -109,10 +110,12 @@ public class CovidStatsFragment extends Fragment {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getContext());
         mEditTextCountryPicker.setOnClickListener(v -> {
             builderSingle.setTitle("Select a Country");
+            String[] countryList = viewModel.getCountryList().keySet().toArray(new String[0]);
+            Arrays.sort(countryList);
             builderSingle.setItems(
-                    viewModel.getCountryList().keySet().toArray(new String[0]),
+                   countryList,
                     (dialog, which) -> {
-                viewModel.onCountrySelected(which);
+                viewModel.onCountrySelected(countryList[which]);
                 mEditTextCountryPicker.setText(viewModel.getCountry());
                 mEditTextProvincePicker.setText(viewModel.getProvince());
             });
