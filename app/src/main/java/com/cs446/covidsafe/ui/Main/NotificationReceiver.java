@@ -30,7 +30,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "chat")
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "CasesDailyUpdates")
                 .setSmallIcon(R.drawable.ic_notification_alert)
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setCategory(Notification.CATEGORY_MESSAGE)
@@ -41,4 +41,5 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         return notificationBuilder.build();
     }
+
 }
