@@ -58,7 +58,7 @@ public class CovidCasesRepository {
     }
 
     public LiveData<Map<String, Map<String, ProvinceData>>> getCovidCasesResponseLiveData() {
-        return covidCasesResponseLiveData;
+            return covidCasesResponseLiveData;
     }
 
     public void getCovidHistory(@NonNull String status, @Nullable String country, @Nullable String province) {

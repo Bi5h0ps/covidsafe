@@ -11,7 +11,8 @@
     <color name="card_bg2">#FFE384</color>
     <color name="card_bg3">#FFEEAF</color>
     <color name="red">#F41919</color>
-    <color name="blue">#FFE500</color>
-    <color name="green">#00EF2C</color>
+    <color name="blue">#01A0FF</color>
+    <color name="green">#00FF2F</color>
+    <color name="orange">#FD930C</color>
     <color name="an_color">#5b5e5b</color>
 </resources>
