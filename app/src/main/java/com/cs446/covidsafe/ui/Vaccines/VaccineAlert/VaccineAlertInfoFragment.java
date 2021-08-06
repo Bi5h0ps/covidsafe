@@ -116,7 +116,7 @@ public class VaccineAlertInfoFragment extends Fragment {
         intent.putExtra("param", "My scheduled action");
         PendingIntent operation = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
         // I choose 3s after the launch of my application
-        alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), operation) ;
+        alarms.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+3000, operation) ;
 
         // First dose info textview ---------------------------------------------------------------
         String monthStr = new DateFormatSymbols().getMonths()[month-1];
