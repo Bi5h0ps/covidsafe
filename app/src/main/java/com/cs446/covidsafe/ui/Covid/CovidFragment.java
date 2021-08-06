@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cs446.covidsafe.R;
+import com.cs446.covidsafe.ui.Covid.CovidInfo.CovidInfoFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import butterknife.BindView;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
  * Use the {@link CovidFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CovidFragment extends Fragment {
+public class CovidFragment extends Fragment implements CovidInfoFragment.OnPageRedirectListener {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -80,7 +81,7 @@ public class CovidFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         FragmentManager fm = getChildFragmentManager();
-        mFragmentStateAdapter = new CovidAdapter(fm, getLifecycle());
+        mFragmentStateAdapter = new CovidAdapter(fm, getLifecycle(), this);
         mViewPager2.setUserInputEnabled(false);
         mViewPager2.setAdapter(mFragmentStateAdapter);
 
@@ -110,5 +111,16 @@ public class CovidFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onButtonClicked(View view) {
+        int currPos = mViewPager2.getCurrentItem();
+        switch (view.getId()) {
+            case R.id.jumpCovidStatsButton:
+                mViewPager2.setCurrentItem(currPos + 1);
+            case R.id.jumpCovidUpdatesButton:
+                mViewPager2.setCurrentItem(currPos + 2);
+        }
     }
 }
