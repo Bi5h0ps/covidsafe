@@ -1,6 +1,10 @@
 package com.cs446.covidsafe.ui.Vaccines.VaccineAlert;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -48,6 +52,7 @@ public class VaccineAlertInfoFragment extends Fragment {
     private int firstTimingNotifSetting;
     private int secondTimingNotifSetting;
 
+
     public VaccineAlertInfoFragment() {
         // Required empty public constructor
     }
@@ -60,6 +65,9 @@ public class VaccineAlertInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        AlarmManager alarms = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        VaccineAlertNotificationReceiver receiver = new VaccineAlertNotificationReceiver();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vaccine_alert, container, false);
@@ -95,6 +103,20 @@ public class VaccineAlertInfoFragment extends Fragment {
         // -----------------------------------------------------------------------------------------------------
 
 
+        IntentFilter filter = new IntentFilter("ALARM_ACTION");
+        requireActivity().registerReceiver(receiver, filter);
+
+        Calendar cal = Calendar.getInstance();
+
+        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.clear();
+        cal.set(2021,7,6,2,10);
+
+        Intent intent = new Intent("ALARM_ACTION");
+        intent.putExtra("param", "My scheduled action");
+        PendingIntent operation = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+        // I choose 3s after the launch of my application
+        alarms.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), operation) ;
 
         // First dose info textview ---------------------------------------------------------------
         String monthStr = new DateFormatSymbols().getMonths()[month-1];
