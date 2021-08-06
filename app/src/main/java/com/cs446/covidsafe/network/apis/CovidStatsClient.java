@@ -1,6 +1,7 @@
 package com.cs446.covidsafe.network.apis;
 
 import com.cs446.covidsafe.model.ProvinceData;
+import com.cs446.covidsafe.model.ProvinceHistoryData;
 
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface CovidStatsClient {
     );
 
     @GET("history")
-    Call<Map<String, Map<String, ProvinceData>>> getHistory(
+    Call<Map<String, ProvinceHistoryData>> getHistory(
             @Query("status") String status,
             @Query("country") String country
     );

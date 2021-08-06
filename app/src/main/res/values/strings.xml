@@ -13,9 +13,9 @@
         Fever&#160;&#160;&#160;&#160;Dry&#160;&#160;&#160;&#160;cough&#160;&#160;&#160;&#160;Fatigue
     </string>
     <string name="covid_severe_symptoms">
-        &#160;Confusion&#160;&#160;&#160;&#160;&#160;High temperature\n
-        Shortness of breath&#160;&#160;&#160;&#160;&#160;Loss of appetite\n
-        Persistent pain or pressure in the chest.
+        &#160;Confusion&#160;&#160;&#160;&#160;&#160;High temperature
+        \nShortness of breath&#160;&#160;&#160;&#160;&#160;Loss of appetite
+        \nPersistent pain or pressure in the chest.
     </string>
     <string name="covid_transmission_information">
         People can catch COVID-19 from others who have the virus. The disease can spread from person
@@ -29,6 +29,38 @@
         Anyone with symptoms should be tested, wherever possible.
         People who do not have symptoms but have had close contact with someone who is, or may be,
         infected may also consider testing – contact your local health guidelines and follow their guidance.
+    </string>
+    <string name="stay_safe_information">
+        1. Maintain at least a 1-metre distance between yourself and others to reduce your risk of infection when they cough, sneeze or speak. Maintain an even greater distance between yourself and others when indoors. The further away, the better.
+        \n\n2. Make wearing a mask a normal part of being around other people. The appropriate use, storage and cleaning or disposal are essential to make masks as effective as possible.
+    </string>
+    <string name="mask_information">
+        1. Clean your hands before you put your mask on, as well as before and after you take it off, and after you touch it at any time.
+        \n\n2. Make sure it covers both your nose, mouth and chin.
+        \n\n3. When you take off a mask, store it in a clean plastic bag, and every day either wash it if it’s a fabric mask, or dispose of a medical mask in a trash bin.
+        \n\n4. Don’t use masks with valves.
+    </string>
+
+    <string name="isolation_information">
+        Both isolation and quarantine are methods of preventing the spread of COVID-19:
+        \n\nQuarantine:
+        \nQuarantine is used for anyone who is a contact of someone infected with the SARS-CoV-2 virus, which causes COVID-19, whether the infected person has symptoms or not. Quarantine means that you remain separated from others because you have been exposed to the virus and you may be infected and can take place in a designated facility or at home. For COVID-19, this means staying in the facility or at home for 14 days.\n\n
+        \nIsolation:
+        Isolation is used for people with COVID-19 symptoms or who have tested positive for the virus. Being in isolation means being separated from other people, ideally in a medically facility where you can receive clinical care.  If isolation in a medical facility is not possible and you are not in a high risk group of developing severe disease, isolation can take place at home. If you have symptoms, you should remain in isolation for at least 10 days plus an additional 3 days without symptoms. If you are infected and do not develop symptoms, you should remain in isolation for 10 days from the time you test positive.
+    </string>
+
+    <string name="treatments_information">
+        Scientists around the world are working to find and develop treatments for COVID-19.
+
+        \n\nOptimal supportive care includes oxygen for severely ill patients and those who are at risk for severe disease and more advanced respiratory support such as ventilation for patients who are critically ill.
+
+        \n\nDexamethasone is a corticosteroid that can help reduce the length of time on a ventilator and save lives of patients with severe and critical illness. Read our dexamethasone QA for more information.
+
+        \n\nResults from the WHO’s Solidarity Trial indicated that remdesivir, hydroxychloroquine, lopinavir/ritonavir and interferon regimens appear to have little or no effect on 28-day mortality or the in-hospital course of COVID-19 among hospitalized patients.
+
+        \n\nHydroxychloroquine has not been shown to offer any benefit for treatment of COVID-19. Read our hydroxychloroquine QA for more information.
+
+        \n\nWHO does not recommend self-medication with any medicines, including antibiotics, as a prevention or cure for COVID-19. WHO is coordinating efforts to develop treatments for COVID-19 and will continue to provide new information as it becomes available.
     </string>
 
     <string-array name="covid_data_type">
@@ -65,4 +97,5 @@
         <item>3 days prior</item>
         <item>1 day prior</item>
     </string-array>
+
 </resources>

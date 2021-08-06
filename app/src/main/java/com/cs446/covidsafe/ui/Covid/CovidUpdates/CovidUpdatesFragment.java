@@ -1,66 +1,212 @@
 package com.cs446.covidsafe.ui.Covid.CovidUpdates;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.cs446.covidsafe.R;
+import com.cs446.covidsafe.ui.Main.NotificationReceiver;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CovidUpdatesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Calendar;
+import java.util.Map;
+import java.util.TreeMap;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CovidUpdatesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private CovidUpdatesViewModel viewModel;
+    private NotificationManager mNotificationManager;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static final int NOTIFICATION_ID = 777;
+
+    @BindView(R.id.DeathsCase)
+    TextView deathsCase;
+
+    @BindView(R.id.ConfirmedCase)
+    TextView confirmedCase;
+
+    @BindView(R.id.RecoveredCase)
+    TextView recoveredCase;
+
+    @BindView(R.id.chart)
+    PieChart chart;
+
+    @BindView(R.id.notification)
+    Switch notification;
 
     public CovidUpdatesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CovidUpdatesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CovidUpdatesFragment newInstance(String param1, String param2) {
-        CovidUpdatesFragment fragment = new CovidUpdatesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        viewModel = ViewModelProviders.of(this).get(CovidUpdatesViewModel.class);
+        viewModel.init();
+        mNotificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_covid_updates, container, false);
+        View view = inflater.inflate(R.layout.fragment_covid_updates, container, false);
+        ButterKnife.bind(this, view);
+
+        PieDataSet set = new PieDataSet(null, "");
+        PieData data = new PieData(set);
+
+        set.setDrawValues(false);
+        chart.setDrawEntryLabels(false);
+        chart.getDescription().setEnabled(false);
+
+        chart.setHoleColor(getResources().getColor(R.color.white));
+        chart.setHoleRadius(60f);
+        chart.setCenterText("Canada COVID-19 Daily Updates");
+        chart.setCenterTextTypeface(Typeface.defaultFromStyle(Typeface.BOLD_ITALIC));
+
+        chart.animateY(2000, Easing.EaseInCirc);
+
+        Legend chartLegend = chart.getLegend();
+
+        chartLegend.setFormSize(12f);
+        chartLegend.setTextSize(12f);
+        chartLegend.setTypeface(Typeface.DEFAULT_BOLD);
+
+        viewModel.getResponseData("Deaths").observe(getViewLifecycleOwner(), new Observer<Map<String, Long>>() {
+            @Override
+            public void onChanged(Map<String, Long> deaths) {
+                if (deaths != null ) {
+                    TreeMap<String, Long> sorted = new TreeMap<String, Long>(deaths);
+                    String Date = sorted.lastKey();
+                    Long DailyDeaths = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
+                    deathsCase.setText(Long.toString(DailyDeaths));
+
+                    PieEntry DeathEntry = new PieEntry(DailyDeaths, "Deaths");
+                    if (set.getEntryCount() == 0) {
+                        set.setColor(getResources().getColor(R.color.blue));
+                    } else {
+                        set.addColor(getResources().getColor(R.color.blue));
+                    }
+                    set.addEntry(DeathEntry);
+                    chart.setData(data);
+                    chart.invalidate();
+                }
+            }
+        });
+
+        viewModel.getResponseData("Confirmed").observe(getViewLifecycleOwner(), new Observer<Map<String, Long>>() {
+            @Override
+            public void onChanged(Map<String, Long> confirmed) {
+                if (confirmed != null) {
+                    TreeMap<String, Long> sorted = new TreeMap<String, Long>(confirmed);
+                    String Date = sorted.lastKey();
+                    Long DailyConfirmed = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
+                    confirmedCase.setText(Long.toString(DailyConfirmed));
+
+                    PieEntry ConfirmedEntry = new PieEntry(DailyConfirmed, "Confirmed");
+                    if (set.getEntryCount() == 0) {
+                        set.setColor(getResources().getColor(R.color.orange));
+                    } else {
+                        set.addColor(getResources().getColor(R.color.orange));
+                    }
+                    set.addEntry(ConfirmedEntry);
+                    chart.setData(data);
+                    chart.invalidate();
+                }
+            }
+        });
+
+        viewModel.getResponseData("Recovered").observe(getViewLifecycleOwner(), new Observer<Map<String, Long>>() {
+            @Override
+            public void onChanged(Map<String, Long> recovered) {
+                if (recovered != null) {
+                    TreeMap<String, Long> sorted = new TreeMap<String, Long>(recovered);
+                    String Date = sorted.lastKey();
+                    Long DailyRecovered = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
+                    recoveredCase.setText(Long.toString(DailyRecovered));
+
+                    PieEntry RecoveredEntry = new PieEntry(DailyRecovered, "Recovered");
+                    if (set.getEntryCount() == 0) {
+                        set.setColor(getResources().getColor(R.color.green));
+                    } else {
+                        set.addColor(getResources().getColor(R.color.green));
+                    }
+                    set.addEntry(RecoveredEntry);
+                    chart.setData(data);
+                    chart.invalidate();
+                }
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                //Calendar calendar = Calendar.getInstance();
+/*                String CHANNEL_ID = "chat";
+                if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O){
+                    NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                            "chat",
+                            NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+                    manager.createNotificationChannel(channel);
+                }
+
+                mNotificationManager.notify(1, createNotification(false));
+                Toast.makeText(getActivity(), "Show Notification clicked", Toast.LENGTH_SHORT).show();*/
+
+                String CHANNEL_ID = "chat";
+                if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O){
+                    NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                            "chat",
+                            NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
+                    manager.createNotificationChannel(channel);
+                }
+
+                Calendar cal = Calendar.getInstance();
+                Intent intent = new Intent(getActivity(), NotificationReceiver.class);
+                intent.setAction("notify");
+
+                PendingIntent sender = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Long time = cal.getTimeInMillis()+1*1000;
+
+                AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                am.set(AlarmManager.RTC_WAKEUP, time, sender);
+                //Toast.makeText(getActivity(), "Show Notification clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
