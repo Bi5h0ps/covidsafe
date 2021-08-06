@@ -6,20 +6,28 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cs446.covidsafe.R;
 import com.cs446.covidsafe.ui.Main.NotificationReceiver;
@@ -29,6 +37,8 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -40,9 +50,19 @@ import butterknife.ButterKnife;
 public class CovidUpdatesFragment extends Fragment {
 
     private CovidUpdatesViewModel viewModel;
-    private NotificationManager mNotificationManager;
+    private AlarmManager alarmManager;
 
-    public static final int NOTIFICATION_ID = 777;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    SharedPreferences sharedpreferences;
+
+    private Long DailyDeaths;
+    private Long DailyConfirmed;
+    private Long DailyRecovered;
+
+    private Long freq;
+
+    private PieDataSet set;
+    private PieData data;
 
     @BindView(R.id.DeathsCase)
     TextView deathsCase;
@@ -59,6 +79,9 @@ public class CovidUpdatesFragment extends Fragment {
     @BindView(R.id.notification)
     Switch notification;
 
+    @BindView(R.id.FrequencySpinner)
+    Spinner spinner;
+
     public CovidUpdatesFragment() {
         // Required empty public constructor
     }
@@ -68,18 +91,28 @@ public class CovidUpdatesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(CovidUpdatesViewModel.class);
         viewModel.init();
-        mNotificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
+        alarmManager= (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        set = new PieDataSet(null, "");
+        data = new PieData(set);
+        freq = AlarmManager.INTERVAL_DAY;
+
+        sharedpreferences = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        createNotificationChannel("CasesDailyUpdates", "CovidUpdatesChannel",
+                "Covid Daily Updates Notification Channel", NotificationManager.IMPORTANCE_DEFAULT);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_covid_updates, container, false);
         ButterKnife.bind(this, view);
 
-        PieDataSet set = new PieDataSet(null, "");
-        PieData data = new PieData(set);
+
+        String[] frequency = new String[]{"Daily", "Weekly"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, frequency);
+        spinner.setAdapter(adapter);
 
         set.setDrawValues(false);
         chart.setDrawEntryLabels(false);
@@ -104,18 +137,14 @@ public class CovidUpdatesFragment extends Fragment {
                 if (deaths != null ) {
                     TreeMap<String, Long> sorted = new TreeMap<String, Long>(deaths);
                     String Date = sorted.lastKey();
-                    Long DailyDeaths = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
-                    deathsCase.setText(Long.toString(DailyDeaths));
 
-                    PieEntry DeathEntry = new PieEntry(DailyDeaths, "Deaths");
-                    if (set.getEntryCount() == 0) {
-                        set.setColor(getResources().getColor(R.color.blue));
+                    DailyDeaths = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
+                    if (DailyDeaths < 0) {
+                        deathsCase.setText("N/A");
                     } else {
-                        set.addColor(getResources().getColor(R.color.blue));
+                        deathsCase.setText(Long.toString(DailyDeaths));
+                        setPieChart(DailyDeaths, "Deaths", getResources().getColor(R.color.blue));
                     }
-                    set.addEntry(DeathEntry);
-                    chart.setData(data);
-                    chart.invalidate();
                 }
             }
         });
@@ -126,18 +155,14 @@ public class CovidUpdatesFragment extends Fragment {
                 if (confirmed != null) {
                     TreeMap<String, Long> sorted = new TreeMap<String, Long>(confirmed);
                     String Date = sorted.lastKey();
-                    Long DailyConfirmed = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
-                    confirmedCase.setText(Long.toString(DailyConfirmed));
 
-                    PieEntry ConfirmedEntry = new PieEntry(DailyConfirmed, "Confirmed");
-                    if (set.getEntryCount() == 0) {
-                        set.setColor(getResources().getColor(R.color.orange));
+                    DailyConfirmed = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
+                    if (DailyConfirmed < 0) {
+                        confirmedCase.setText("N/A");
                     } else {
-                        set.addColor(getResources().getColor(R.color.orange));
+                        confirmedCase.setText(Long.toString(DailyConfirmed));
+                        setPieChart(DailyConfirmed, "Confirmed", getResources().getColor(R.color.orange));
                     }
-                    set.addEntry(ConfirmedEntry);
-                    chart.setData(data);
-                    chart.invalidate();
                 }
             }
         });
@@ -148,19 +173,38 @@ public class CovidUpdatesFragment extends Fragment {
                 if (recovered != null) {
                     TreeMap<String, Long> sorted = new TreeMap<String, Long>(recovered);
                     String Date = sorted.lastKey();
-                    Long DailyRecovered = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
-                    recoveredCase.setText(Long.toString(DailyRecovered));
 
-                    PieEntry RecoveredEntry = new PieEntry(DailyRecovered, "Recovered");
-                    if (set.getEntryCount() == 0) {
-                        set.setColor(getResources().getColor(R.color.green));
+                    DailyRecovered = sorted.get(Date) - sorted.get(sorted.lowerKey(Date));
+                    if (DailyRecovered < 0) {
+                        recoveredCase.setText("N/A");
                     } else {
-                        set.addColor(getResources().getColor(R.color.green));
+                        recoveredCase.setText(Long.toString(DailyRecovered));
+                        setPieChart(DailyRecovered, "Recovered", getResources().getColor(R.color.green));
                     }
-                    set.addEntry(RecoveredEntry);
-                    chart.setData(data);
-                    chart.invalidate();
                 }
+            }
+        });
+
+        boolean checked = sharedpreferences.getBoolean("checked", false);
+        int interval = sharedpreferences.getInt("interval", 0);
+        notification.setChecked(checked);
+        spinner.setSelection(interval);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (frequency[i].equals(frequency[0])) {
+                    freq = 5 * 1000L;
+                } else if (frequency[i].equals(frequency[1])) {
+                    freq = AlarmManager.INTERVAL_DAY * 7;
+                }
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt("interval", i);
+                editor.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
 
@@ -174,39 +218,63 @@ public class CovidUpdatesFragment extends Fragment {
         notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                //Calendar calendar = Calendar.getInstance();
-/*                String CHANNEL_ID = "chat";
-                if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O){
-                    NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                            "chat",
-                            NotificationManager.IMPORTANCE_DEFAULT);
-                    NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
-                    manager.createNotificationChannel(channel);
+                if (isChecked) {
+                    Toast.makeText(getActivity(), "Notification Enabled", Toast.LENGTH_SHORT).show();
+
+                    Calendar cal = Calendar.getInstance();
+                    Long currentTime = cal.getTimeInMillis();
+
+                    Intent intent = new Intent(getActivity(), NotificationReceiver.class);
+
+                    intent.putExtra("countryInfo", "Canada");
+                    intent.setAction("CaseNotification");
+
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, currentTime, freq, pendingIntent);
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putBoolean("checked", notification.isChecked());
+                    editor.commit();
+                } else {
+                    Toast.makeText(getActivity(), "Notification Disabled", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), NotificationReceiver.class);
+                    intent.putExtra("countryInfo", "Canada");
+                    intent.setAction("CaseNotification");
+
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    alarmManager.cancel(pendingIntent);
+                    pendingIntent.cancel();
+
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.putBoolean("checked", notification.isChecked());
+                    editor.commit();
                 }
-
-                mNotificationManager.notify(1, createNotification(false));
-                Toast.makeText(getActivity(), "Show Notification clicked", Toast.LENGTH_SHORT).show();*/
-
-                String CHANNEL_ID = "chat";
-                if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.O){
-                    NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                            "chat",
-                            NotificationManager.IMPORTANCE_DEFAULT);
-                    NotificationManager manager = getActivity().getSystemService(NotificationManager.class);
-                    manager.createNotificationChannel(channel);
-                }
-
-                Calendar cal = Calendar.getInstance();
-                Intent intent = new Intent(getActivity(), NotificationReceiver.class);
-                intent.setAction("notify");
-
-                PendingIntent sender = PendingIntent.getBroadcast(getActivity(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                Long time = cal.getTimeInMillis()+1*1000;
-
-                AlarmManager am = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                am.set(AlarmManager.RTC_WAKEUP, time, sender);
-                //Toast.makeText(getActivity(), "Show Notification clicked", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void setPieChart(Long cases, String label, int color) {
+        PieEntry Entry = new PieEntry(cases, label);
+
+        if (set.getEntryCount() == 0) {
+            set.setColor(color);
+        } else {
+            set.addColor(color);
+        }
+
+        set.addEntry(Entry);
+        chart.setData(data);
+        chart.invalidate();
+    }
+
+    private void createNotificationChannel(String CHANNEL_ID, String name, String channel_description, int importance) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(channel_description);
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+
 }
