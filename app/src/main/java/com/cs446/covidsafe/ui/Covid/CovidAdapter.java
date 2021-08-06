@@ -11,9 +11,14 @@ import com.cs446.covidsafe.ui.Covid.CovidStats.CovidStatsFragment;
 import com.cs446.covidsafe.ui.Covid.CovidUpdates.CovidUpdatesFragment;
 
 public class CovidAdapter extends FragmentStateAdapter {
-    public CovidAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+    public CovidAdapter(@NonNull FragmentManager fragmentManager,
+                        @NonNull Lifecycle lifecycle,
+                        @NonNull CovidInfoFragment.OnPageRedirectListener listener) {
         super(fragmentManager, lifecycle);
+        mListener = listener;
     }
+
+    CovidInfoFragment.OnPageRedirectListener mListener;
 
     @NonNull
     @Override
@@ -25,7 +30,7 @@ public class CovidAdapter extends FragmentStateAdapter {
             case 2:
                 return new CovidUpdatesFragment();
         }
-        return new CovidInfoFragment();
+        return new CovidInfoFragment(mListener);
     }
 
     @Override

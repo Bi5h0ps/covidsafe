@@ -261,7 +261,7 @@
                                         android:background="@android:color/white"
                                         android:text="COVID STATS"
                                         android:textSize="@dimen/covid_info_sub_title"
-                                        android:visibility="gone" />
+                                        android:visibility="gone"/>
 
 
                                 </LinearLayout>
@@ -397,8 +397,7 @@
                                         android:id="@+id/jumpCovidUpdatesButton"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="COVID UPDATES"
-                                        android:visibility="gone" />
+                                        android:text="COVID UPDATES" />
                                 </LinearLayout>
 
                             </androidx.cardview.widget.CardView>

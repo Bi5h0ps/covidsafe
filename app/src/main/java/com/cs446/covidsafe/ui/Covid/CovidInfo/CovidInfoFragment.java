@@ -51,8 +51,14 @@ public class CovidInfoFragment extends Fragment {
 
     private List<Question> questionList = new ArrayList<Question>();
 
+    OnPageRedirectListener mOnPageRedirectListener;
+
     public CovidInfoFragment() {
         // Required empty public constructor
+    }
+
+    public CovidInfoFragment(OnPageRedirectListener onPageRedirectListener) {
+        this.mOnPageRedirectListener = onPageRedirectListener;
     }
 
     /**
@@ -110,23 +116,21 @@ public class CovidInfoFragment extends Fragment {
     }
 
     private void setCovidStatsLink(){
-        // TODO: add logic here:
         // When the user clicks the button, it should jump to the covid stats page
         Button jumpCovidStatsButton = (Button) rootView.findViewById(R.id.jumpCovidStatsButton);
         jumpCovidStatsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                mOnPageRedirectListener.onButtonClicked(v);
             }
         });
     }
 
     private void setCovidUpdatesLink() {
-        // TODO: add logic here:
         // When the user clicks the button, it should jump to the covid updates page
         Button jumpCovidUpdatesButton = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
         jumpCovidUpdatesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                mOnPageRedirectListener.onButtonClicked(v);
             }
         });
     }
@@ -367,5 +371,9 @@ public class CovidInfoFragment extends Fragment {
         setButtonLinks();
         fillQuestions();
         return rootView;
+    }
+
+    public interface OnPageRedirectListener{
+        void onButtonClicked(View view);
     }
 }
