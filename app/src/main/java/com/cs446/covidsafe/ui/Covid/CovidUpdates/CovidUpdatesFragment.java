@@ -53,7 +53,8 @@ public class CovidUpdatesFragment extends Fragment {
     private AlarmManager alarmManager;
 
     public static final String MyPREFERENCES = "MyPrefs" ;
-    SharedPreferences sharedpreferences;
+    private String[] frequency = new String[]{"Daily", "Weekly"};
+    public SharedPreferences sharedpreferences;
 
     private Long DailyDeaths;
     private Long DailyConfirmed;
@@ -109,8 +110,6 @@ public class CovidUpdatesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_covid_updates, container, false);
         ButterKnife.bind(this, view);
 
-
-        String[] frequency = new String[]{"Daily", "Weekly"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, frequency);
         spinner.setAdapter(adapter);
 
@@ -190,24 +189,6 @@ public class CovidUpdatesFragment extends Fragment {
         notification.setChecked(checked);
         spinner.setSelection(interval);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (frequency[i].equals(frequency[0])) {
-                    freq = 5 * 1000L;
-                } else if (frequency[i].equals(frequency[1])) {
-                    freq = AlarmManager.INTERVAL_DAY * 7;
-                }
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putInt("interval", i);
-                editor.commit();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-
         return view;
     }
 
@@ -238,6 +219,7 @@ public class CovidUpdatesFragment extends Fragment {
                 } else {
                     Toast.makeText(getActivity(), "Notification Disabled", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), NotificationReceiver.class);
+
                     intent.putExtra("countryInfo", "Canada");
                     intent.setAction("CaseNotification");
 
@@ -249,6 +231,49 @@ public class CovidUpdatesFragment extends Fragment {
                     editor.putBoolean("checked", notification.isChecked());
                     editor.commit();
                 }
+            }
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (frequency[i].equals(frequency[0])) {
+                    freq = 5 * 1000L;
+                } else if (frequency[i].equals(frequency[1])) {
+                    freq = AlarmManager.INTERVAL_DAY * 7;
+                }
+
+                if (notification.isChecked()) {
+                    Intent intent = new Intent(getActivity(), NotificationReceiver.class);
+
+                    intent.putExtra("countryInfo", "Canada");
+                    intent.setAction("CaseNotification");
+
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 10, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    alarmManager.cancel(pendingIntent);
+                    pendingIntent.cancel();
+
+                    Calendar cal = Calendar.getInstance();
+                    Long currentTime = cal.getTimeInMillis();
+
+                    Intent newIntent = new Intent(getActivity(), NotificationReceiver.class);
+
+                    newIntent.putExtra("countryInfo", "Canada");
+                    newIntent.setAction("CaseNotification");
+
+                    PendingIntent newPendingIntent = PendingIntent.getBroadcast(getActivity(), 10, newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, currentTime, freq, newPendingIntent);
+
+                    Toast.makeText(getActivity(), "Updated Notification", Toast.LENGTH_SHORT).show();
+                }
+
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putInt("interval", i);
+                editor.commit();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
     }
