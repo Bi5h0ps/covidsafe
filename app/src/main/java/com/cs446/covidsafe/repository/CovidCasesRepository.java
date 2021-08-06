@@ -1,15 +1,22 @@
 package com.cs446.covidsafe.repository;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.broooapps.graphview.models.PointMap;
 import com.cs446.covidsafe.model.ProvinceData;
 import com.cs446.covidsafe.model.ProvinceHistoryData;
 import com.cs446.covidsafe.network.apis.CovidStatsClient;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -68,7 +75,9 @@ public class CovidCasesRepository {
                     @Override
                     public void onResponse(Call<Map<String, ProvinceHistoryData>> call, Response<Map<String, ProvinceHistoryData>> response) {
                         if (response.body() != null) {
-                            covidHistoryResponseLiveData.postValue(response.body().get(province).getData());
+                            if (response.body().get(province) != null) {
+                                covidHistoryResponseLiveData.postValue(response.body().get(province).getData());
+                            }
                         }
                     }
 

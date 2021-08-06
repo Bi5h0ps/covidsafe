@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,24 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.broooapps.graphview.CurveGraphConfig;
+import com.broooapps.graphview.CurveGraphView;
+import com.broooapps.graphview.models.GraphData;
+import com.broooapps.graphview.models.PointMap;
 import com.cs446.covidsafe.R;
 import com.cs446.covidsafe.model.ProvinceData;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
@@ -51,6 +65,9 @@ public class CovidStatsFragment extends Fragment {
     @BindView(R.id.search_button)
     Button mSearchButton;
 
+    @BindView(R.id.line_chart)
+    LineChart mLineChart;
+
     public CovidStatsFragment() {
         // Required empty public constructor
     }
@@ -68,7 +85,26 @@ public class CovidStatsFragment extends Fragment {
         });
         viewModel.getHistoryStatsData().observe(this, stats -> {
             if (stats != null) {
-                //Update UI
+                ArrayList<Pair<String, Long>> sortedList = new ArrayList<>();
+                for (String key : stats.keySet()) {
+                    sortedList.add(new Pair<>(key, stats.get(key)));
+                }
+                Collections.sort(sortedList, (p1, p2) ->
+                        p1.first.compareTo(p2.first));
+
+                int index = 0;
+                ArrayList<Entry> values = new ArrayList<>();
+                for(Pair<String, Long> p : sortedList) {
+                    values.add(new Entry(index, p.second.intValue()));
+                    index++;
+                }
+                LineDataSet lineDataSet = new LineDataSet(values, "Data set 1");
+                lineDataSet.setFillAlpha(110);
+                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                dataSets.add(lineDataSet);
+                LineData data = new LineData(dataSets);
+                mLineChart.setData(data);
+                mLineChart.invalidate();
             }
         });
     }
@@ -84,6 +120,9 @@ public class CovidStatsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setSelection(0);
+
+        mLineChart.setDragEnabled(true);
+        mLineChart.setScaleEnabled(false);
 
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getContext());
         mEditTextCountryPicker.setOnClickListener(v -> {
