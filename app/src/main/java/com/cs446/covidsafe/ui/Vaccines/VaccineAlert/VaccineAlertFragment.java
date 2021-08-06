@@ -1,79 +1,102 @@
 package com.cs446.covidsafe.ui.Vaccines.VaccineAlert;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cs446.covidsafe.R;
-import com.cs446.covidsafe.ui.Vaccines.VaccineInfo.vaccine_info_adapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link VaccineAlertFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Map;
+
 public class VaccineAlertFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // the alerts page
+    VaccineAlertInfoFragment alertsPage = new VaccineAlertInfoFragment();
+    // the other page
+    VaccineAlertInputFragment infoPage = new VaccineAlertInputFragment();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private void childFragmentSelector()
+    {
 
-    private String location;
-    private String time; // this should probably be converted to something using the proper time class afterwards
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-    private String[] reminderSettings = {
-            "Notification 1 week, 3 days, and 1 day prior",
-            "Notification 3 days and 1 day prior",
-            "Notification 1 day prior"
-    };
+        // retrieve shared preferences
+        SharedPreferences sharedPreferences;
+        sharedPreferences= getActivity().getSharedPreferences("vaccInfo", Context.MODE_PRIVATE);
+//        Log.d("myLog", sharedPreferences.toString());
 
-    public VaccineAlertFragment() {
-        // Required empty public constructor
-    }
+        Map<String,?> keys = sharedPreferences.getAll();
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment VaccineAlertFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static VaccineAlertFragment newInstance(String param1, String param2) {
-        VaccineAlertFragment fragment = new VaccineAlertFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        for(Map.Entry<String,?> entry : keys.entrySet()){
+            Log.d("myLog",entry.getKey() + ": " +
+                    entry.getValue().toString());
         }
+
+        // if user has already been vaccinated
+        Boolean isVaccinated = sharedPreferences.getBoolean("isVaccinated", false);
+
+        if(fragmentManager.findFragmentByTag("alertsPage") != null)
+        {
+            fragmentTransaction.remove(alertsPage);
+        }
+        else if(fragmentManager.findFragmentByTag("infoPage") != null)
+        {
+            fragmentTransaction.remove(infoPage)    ;
+        }
+
+        if(isVaccinated)
+        {
+            fragmentTransaction.add(R.id.alertFragmentContainerView, alertsPage, "alertsPage");
+        }
+        else
+        {
+            fragmentTransaction.add(R.id.alertFragmentContainerView, infoPage, "infoPage");
+        }
+        fragmentTransaction.commit();
+
+    }
+
+
+    public static VaccineAlertFragment newInstance() {
+        return new VaccineAlertFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_vaccine_alert, container, false);
-        // Inflate the layout for this fragment
-        return view;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        childFragmentSelector();
+        return inflater.inflate(R.layout.vaccine_alert_fragment, container, false);
     }
+
+    @Override
+    public void onResume () {
+        Log.d("myLog", "do we resume?");
+        childFragmentSelector();
+        super.onResume();
+    }
+
+
+
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        mViewModel = new ViewModelProvider(this).get(VaccineAlertViewModel.class);
+//        // TODO: Use the ViewModel
+//    }
+
 }
