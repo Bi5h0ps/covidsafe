@@ -1,17 +1,11 @@
 package com.cs446.covidsafe.ui.Covid.CovidStats;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -24,26 +18,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.broooapps.graphview.CurveGraphConfig;
-import com.broooapps.graphview.CurveGraphView;
-import com.broooapps.graphview.models.GraphData;
-import com.broooapps.graphview.models.PointMap;
 import com.cs446.covidsafe.R;
-import com.cs446.covidsafe.model.ProvinceData;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +34,6 @@ import butterknife.ButterKnife;
 public class CovidStatsFragment extends Fragment {
 
     private CovidStatsViewModel viewModel;
-    private NavController mNavController;
 
     @BindView(R.id.data_type_spinner)
     Spinner mSpinner;

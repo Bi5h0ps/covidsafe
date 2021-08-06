@@ -7,16 +7,10 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.broooapps.graphview.models.PointMap;
 import com.cs446.covidsafe.model.ProvinceData;
 import com.cs446.covidsafe.model.ProvinceHistoryData;
 import com.cs446.covidsafe.network.apis.CovidStatsClient;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
