@@ -87,8 +87,8 @@ public class CovidStatsViewModel extends AndroidViewModel {
         return mProvince;
     }
 
-    public void onCountrySelected(int which) {
-        mCountry = countryList.keySet().toArray(new String[0])[which];
+    public void onCountrySelected(String country) {
+        mCountry = country;
         mProvince = "All";
         provinceList = countryList.get(mCountry);
     }
