@@ -119,8 +119,6 @@ public class CovidFragment extends Fragment implements CovidInfoFragment.OnPageR
         switch (view.getId()) {
             case R.id.jumpCovidStatsButton:
                 mViewPager2.setCurrentItem(currPos + 1);
-            case R.id.jumpCovidUpdatesButton:
-                mViewPager2.setCurrentItem(currPos + 2);
         }
     }
 }

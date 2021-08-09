@@ -125,15 +125,7 @@ public class CovidInfoFragment extends Fragment {
         });
     }
 
-    private void setCovidUpdatesLink() {
-        // When the user clicks the button, it should jump to the covid updates page
-        Button jumpCovidUpdatesButton = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
-        jumpCovidUpdatesButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mOnPageRedirectListener.onButtonClicked(v);
-            }
-        });
-    }
+
 
 
     private void fillSpinnerSource(){
@@ -232,14 +224,11 @@ public class CovidInfoFragment extends Fragment {
         button4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TextView tv = (TextView) rootView.findViewById(R.id.testinfo);
-                Button bv = (Button) rootView.findViewById(R.id.jumpCovidUpdatesButton);
                 if (tv.getVisibility() == View.GONE) {
                     tv.setVisibility(View.VISIBLE);
-                    bv.setVisibility(View.VISIBLE);
                     button4.setImageResource(R.drawable.ic_baseline_keyboard_arrow_down_24);
                 } else {
                     tv.setVisibility(View.GONE);
-                    bv.setVisibility(View.GONE);
                     button4.setImageResource(R.drawable.ic_baseline_keyboard_arrow_right_24);
                 }
             }
@@ -338,7 +327,6 @@ public class CovidInfoFragment extends Fragment {
         //Register events for buttons
         setWhoWebLink();
         setCovidStatsLink();
-        setCovidUpdatesLink();
         registerExpandEvent();
         registerMarkCalculation();
     }

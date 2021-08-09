@@ -393,11 +393,6 @@
                                         android:textSize="@dimen/covid_info_text"
                                         android:visibility="gone" />
 
-                                    <Button
-                                        android:id="@+id/jumpCovidUpdatesButton"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="COVID UPDATES" />
                                 </LinearLayout>
 
                             </androidx.cardview.widget.CardView>
